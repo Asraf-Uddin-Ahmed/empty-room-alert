@@ -8,13 +8,13 @@ using EmptyRoomAlert.Foundation.Core.Enums;
 
 namespace EmptyRoomAlert.Foundation.Core.Aggregates
 {
-    public class Room : Entity
+    public class RoomState : Entity
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public RoomType Type { get; set; }
+        public bool IsEmpty { get; set; }
+        public DateTime LogTime { get; set; }
 
-        public ICollection<RoomState> RoomStates { get; set; }
+        public Guid RoomID { get; set; }
+        public Room Room { get; set; }
 
     }
 }

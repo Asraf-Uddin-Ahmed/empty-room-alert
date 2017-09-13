@@ -105,6 +105,7 @@
     <Compile Include="Core\Aggregates\Identity\CustomUserLogin.cs" />
     <Compile Include="Core\Aggregates\Identity\CustomUserRole.cs" />
     <Compile Include="Core\Aggregates\Identity\RefreshToken.cs" />
+    <Compile Include="Core\Aggregates\RoomState.cs" />
     <Compile Include="Core\Aggregates\Room.cs" />
     <Compile Include="Core\Aggregates\Settings.cs" />
     <Compile Include="Core\Constant\ApplicationRoles.cs" />
@@ -140,6 +141,11 @@
     <Compile Include="Migrations\201709130842132_CreateRoomTable.Designer.cs">
       <DependentUpon>201709130842132_CreateRoomTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709130848030_CreateRoomStateTable.cs" />
+    <Compile Include="Migrations\201709130848030_CreateRoomStateTable.Designer.cs">
+      <DependentUpon>201709130848030_CreateRoomStateTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\EntityConfigurations\RoomStateConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\RoomConfiguration.cs" />
     <Compile Include="Persistence\Factories\ApplicationUserFactory.cs" />
     <Compile Include="Migrations\201503210843158_InitialCreate.cs" />
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709130842132_CreateRoomTable.resx">
       <DependentUpon>201709130842132_CreateRoomTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709130848030_CreateRoomStateTable.resx">
+      <DependentUpon>201709130848030_CreateRoomStateTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
