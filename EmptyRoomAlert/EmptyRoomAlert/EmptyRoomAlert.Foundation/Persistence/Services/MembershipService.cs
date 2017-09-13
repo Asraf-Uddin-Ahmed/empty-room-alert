@@ -1,0 +1,284 @@
+﻿using Newtonsoft.Json;
+using Ninject;
+using Ninject.Extensions.Logging;
+using Ratul.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using EmptyRoomAlert.Foundation;
+using EmptyRoomAlert.Foundation.Core;
+using EmptyRoomAlert.Foundation.Core.Aggregates;
+using EmptyRoomAlert.Foundation.Core.Enums;
+using EmptyRoomAlert.Foundation.Core.Factories;
+using EmptyRoomAlert.Foundation.Core.Repositories;
+using EmptyRoomAlert.Foundation.Core.Services;
+
+namespace EmptyRoomAlert.Foundation.Persistence.Services
+{
+    public class MembershipService : IMembershipService
+    {
+        private ILogger _logger;
+        private IUserService _userService;
+        private RegexUtility _regexUtility;
+        private IUserVerificationFactory _userVerificationFactory;
+        private IPasswordVerificationFactory _passwordVerificationFactory;
+        private IUnitOfWork _unitOfWork;
+        [Inject]
+        public MembershipService(ILogger logger,
+            IUserFactory userFactory,
+            IUserService userService,
+            RegexUtility regexUtility,
+            IUserVerificationFactory userVerificationFactory,
+            IPasswordVerificationFactory passwordVerificationFactory,
+            IUnitOfWork unitOfWork)
+        {
+            _logger = logger;
+            _userService = userService;
+            _regexUtility = regexUtility;
+            _userVerificationFactory = userVerificationFactory;
+            _passwordVerificationFactory = passwordVerificationFactory;
+            _unitOfWork = unitOfWork;
+        }
+
+        public User CreateUser(User user)
+        {
+            if (user == null)
+                throw new ArgumentException("User is missing");
+            if (string.IsNullOrEmpty(user.EmailAddress))
+                throw new ArgumentException("EmailAddress address is missing");
+            if (!_regexUtility.IsEmailValid(user.EmailAddress))
+                throw new ArgumentException("EmailAddress address is invalid");
+            if (string.IsNullOrEmpty(user.UserName))
+                throw new ArgumentException("UserName is missing");
+            if (string.IsNullOrEmpty(user.EncryptedPassword))
+                throw new ArgumentException("Password is missing");
+
+            try
+            {
+                if (user.Status == UserStatus.Unverified)
+                {
+                    UserVerification userVerification = _userVerificationFactory.Create();
+                    user.UserVerifications = new List<UserVerification>();
+                    user.UserVerifications.Add(userVerification);
+                }
+                _unitOfWork.Users.Add(user);
+                _unitOfWork.Commit();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to create user with parameters: UserName={0}, EmailAddress={1}, TypeOfUser={2}", user.UserName, user.EmailAddress, user.TypeOfUser);
+                return null;
+            }
+        }
+
+        public LoginStatus ProcessLogin(string userName, string password)
+        {
+            try
+            {
+                User user = _userService.GetUserByUserName(userName);
+                if (user == null)
+                    return LoginStatus.InvalidLogin;
+
+                if (!user.DecryptedPassword.Equals(password))
+                {
+                    this.ProcessInvalidLogin(user);
+                    return LoginStatus.InvalidLogin;
+                }
+
+                if (user.Status == UserStatus.Active)
+                {
+                    this.ProcessValidLogin(user);
+                    return LoginStatus.Successful;
+                }
+                if (user.Status == UserStatus.Blocked)
+                    return LoginStatus.Blocked;
+                if (user.Status == UserStatus.Unverified)
+                    return LoginStatus.Unverified;
+                return LoginStatus.InvalidLogin;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to login with the following parameters : username={0}, password={1}", userName, password);
+                return LoginStatus.Failed;
+            }
+        }
+
+        /// <summary>
+        /// If the verification code is found, the user email associated with the verification
+        /// code will be moved from Unverified to Active. But if the user is Blocked, then
+        /// no change will occure. All user verification code will removed after successful activation.
+        /// </summary>
+        /// <param name="verificationCode">The verification code sent in email</param>
+        /// <returns></returns>
+        public VerificationStatus VerifyForUserStatus(string verificationCode)
+        {
+            if (string.IsNullOrEmpty(verificationCode))
+                throw new ArgumentException("Verification code is missing");
+
+            try
+            {
+                UserVerification verification = _unitOfWork.UserVerifications.GetByVerificationCode(verificationCode);
+                if (verification == null)
+                    return VerificationStatus.VerificationCodeDoesNotExist;
+
+                User user = _userService.GetUser(verification.UserID);
+                if (user != null && user.Status != UserStatus.Blocked)
+                {
+                    user.Status = UserStatus.Active;
+                    _userService.UpdateUserInformation(user);
+                    _unitOfWork.UserVerifications.RemoveByUserID(user.ID);
+                    _unitOfWork.Commit();
+                    return VerificationStatus.Success;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to verify user with verificationCode: {0}", verificationCode);
+            }
+            return VerificationStatus.Fail;
+        }
+        public PasswordVerification ProcessForgotPassword(User user)
+        {
+            PasswordVerification verification = _passwordVerificationFactory.Create();
+            verification.UserID = user.ID;
+            _unitOfWork.PasswordVerifications.Add(verification);
+            _unitOfWork.Commit();
+            return verification;
+        }
+        /// <summary>
+        /// If the verification code is found and the user is notBlocked, then
+        /// all user verification code will removed before returning success.
+        /// </summary>
+        /// <param name="verificationCode">The verification code sent in email</param>
+        /// <returns></returns>
+        public VerificationStatus VerifyForPasswordChange(string verificationCode)
+        {
+            if (string.IsNullOrEmpty(verificationCode))
+                throw new ArgumentException("Verification code is missing");
+
+            try
+            {
+                PasswordVerification verification = _unitOfWork.PasswordVerifications.GetByVerificationCode(verificationCode);
+                if (verification == null)
+                {
+                    return VerificationStatus.VerificationCodeDoesNotExist;
+                }
+
+                User user = _userService.GetUser(verification.UserID);
+                if (user != null)
+                {
+                    return VerificationStatus.Success;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to verify user with verificationCode: {0}", verificationCode);
+            }
+            return VerificationStatus.Fail;
+        }
+        public bool BlockUser(Guid userID)
+        {
+            try
+            {
+                User user = _userService.GetUser(userID);
+                if (user == null)
+                    return false;
+                user.Status = UserStatus.Blocked;
+                _userService.UpdateUserInformation(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to Block User with userID: {0}", userID);
+                return false;
+            }
+        }
+
+        public bool UnblockUser(Guid userID)
+        {
+            try
+            {
+                User user = _userService.GetUser(userID);
+                if (user == null)
+                    return false;
+                user.Status = UserStatus.Active;
+                _userService.UpdateUserInformation(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to Un-Block User with userID: {0}", userID);
+                return false;
+            }
+        }
+
+        public bool ChangeUserPassword(Guid userID, string oldPassword, string newPassword)
+        {
+            if (userID == Guid.Empty)
+                throw new ArgumentException("userID is invalid");
+            if (string.IsNullOrEmpty(oldPassword))
+                throw new ArgumentNullException("oldPassword");
+            if (string.IsNullOrEmpty(newPassword))
+                throw new ArgumentNullException("newPassword");
+
+            try
+            {
+                User user = _userService.GetUser(userID);
+                if (user == null || user.DecryptedPassword != oldPassword)
+                    return false;
+
+                user.EncryptedPassword = CryptographicUtility.Encrypt(newPassword, user.ID);
+                _userService.UpdateUserInformation(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to ChangeUserPassword with values: userID={0}, oldPassword={1}, newPassword={2}", userID, oldPassword, newPassword);
+                return false;
+            }
+
+        }
+        public bool ChangeUserPassword(Guid userID, string newPassword)
+        {
+            if (userID == Guid.Empty)
+                throw new ArgumentException("userID is invalid");
+            if (string.IsNullOrEmpty(newPassword))
+                throw new ArgumentNullException("newPassword");
+
+            try
+            {
+                User user = _userService.GetUser(userID);
+                if (user == null)
+                    return false;
+
+                user.EncryptedPassword = CryptographicUtility.Encrypt(newPassword, user.ID);
+                _userService.UpdateUserInformation(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to ChangeUserPassword with values: userID={0}, newPassword={1}", userID, newPassword);
+                return false;
+            }
+
+        }
+        private void ProcessInvalidLogin(User user)
+        {
+            user.LastWrongPasswordAttempt = DateTime.UtcNow;
+            user.WrongPasswordAttempt++;
+            int maxPasswordMistake = int.Parse(_unitOfWork.Settings.GetValueByName(SettingsName.MaxPasswordMistake));
+            if (user.WrongPasswordAttempt > maxPasswordMistake)
+                user.Status = UserStatus.Blocked;
+            _userService.UpdateUserInformation(user);
+        }
+        private void ProcessValidLogin(User user)
+        {
+            user.LastLogin = DateTime.UtcNow;
+            user.WrongPasswordAttempt = 0;
+            _userService.UpdateUserInformation(user);
+        }
+
+    }
+}

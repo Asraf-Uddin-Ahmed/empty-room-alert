@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73069F52-24E1-4003-BB07-E7384C2821AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EmptyRoomAlert.Foundation</RootNamespace>
+    <AssemblyName>EmptyRoomAlert.Foundation</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Logging, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Extensions.Logging.3.2.3.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ratul.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ratul.Utility.1.0.3\lib\Ratul.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Aggregates\Entity.cs" />
+    <Compile Include="Core\Aggregates\Identity\ApplicationUser.cs" />
+    <Compile Include="Core\Aggregates\Identity\Client.cs" />
+    <Compile Include="Core\Aggregates\Identity\CustomRole.cs" />
+    <Compile Include="Core\Aggregates\Identity\CustomUserClaim.cs" />
+    <Compile Include="Core\Aggregates\Identity\CustomUserLogin.cs" />
+    <Compile Include="Core\Aggregates\Identity\CustomUserRole.cs" />
+    <Compile Include="Core\Aggregates\Identity\RefreshToken.cs" />
+    <Compile Include="Core\Aggregates\Settings.cs" />
+    <Compile Include="Core\Aggregates\PasswordVerification.cs" />
+    <Compile Include="Core\Aggregates\UserVerification.cs" />
+    <Compile Include="Core\Aggregates\User.cs" />
+    <Compile Include="Core\Constant\ApplicationRoles.cs" />
+    <Compile Include="Core\Enums\ApplicationType.cs" />
+    <Compile Include="Core\Factories\IApplicationUserFactory.cs" />
+    <Compile Include="Core\SearchData\Pagination.cs" />
+    <Compile Include="Core\SearchData\OrderBy.cs" />
+    <Compile Include="Core\Factories\IPasswordVerificationFactory.cs" />
+    <Compile Include="Core\Factories\IUserVerificationFactory.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\SearchData\UserSearch.cs" />
+    <Compile Include="Core\Enums\LoginStatus.cs" />
+    <Compile Include="Core\Enums\SettingsName.cs" />
+    <Compile Include="Core\Enums\SettingsType.cs" />
+    <Compile Include="Core\Enums\VerificationStatus.cs" />
+    <Compile Include="Core\Enums\UserStatus.cs" />
+    <Compile Include="Core\Enums\UserType.cs" />
+    <Compile Include="Core\Factories\IUserFactory.cs" />
+    <Compile Include="Core\Repositories\IPasswordVerificationRepository.cs" />
+    <Compile Include="Core\Repositories\IRepository.cs" />
+    <Compile Include="Core\Repositories\IRepositorySearch.cs" />
+    <Compile Include="Core\Repositories\ISettingsRepository.cs" />
+    <Compile Include="Core\Repositories\IUserRepository.cs" />
+    <Compile Include="Core\Repositories\IUserVerificationRepository.cs" />
+    <Compile Include="Core\SearchData\EntitySearch.cs" />
+    <Compile Include="Core\Services\Email\IConfirmUserMessageBuilder.cs" />
+    <Compile Include="Core\Services\Email\IEmailService.cs" />
+    <Compile Include="Core\Services\Email\IForgotPasswordMessageBuilder.cs" />
+    <Compile Include="Core\Services\Email\IMessageBuilder.cs" />
+    <Compile Include="Core\Services\IMembershipService.cs" />
+    <Compile Include="Core\Services\IPasswordVerificationService.cs" />
+    <Compile Include="Migrations\201608080613016_EnhanceUserTable.cs" />
+    <Compile Include="Migrations\201608080613016_EnhanceUserTable.Designer.cs">
+      <DependentUpon>201608080613016_EnhanceUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610100547365_AddAllIdentityTables.cs" />
+    <Compile Include="Migrations\201610100547365_AddAllIdentityTables.Designer.cs">
+      <DependentUpon>201610100547365_AddAllIdentityTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\EntityConfigurations\PasswordVerificationConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserVerificationConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Persistence\Factories\ApplicationUserFactory.cs" />
+    <Compile Include="Persistence\Factories\PasswordVerificationFactory.cs" />
+    <Compile Include="Persistence\Factories\UserFactory.cs" />
+    <Compile Include="Migrations\201503210843158_InitialCreate.cs" />
+    <Compile Include="Migrations\201503210843158_InitialCreate.Designer.cs">
+      <DependentUpon>201503210843158_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503221659567_PasswordVerification.cs" />
+    <Compile Include="Migrations\201503221659567_PasswordVerification.Designer.cs">
+      <DependentUpon>201503221659567_PasswordVerification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\Factories\UserVerificationFactory.cs" />
+    <Compile Include="Persistence\Repositories\RepositorySearch.cs" />
+    <Compile Include="Persistence\Services\Email\EmailService.cs" />
+    <Compile Include="Persistence\Services\Email\ConfirmUserMessageBuilder.cs" />
+    <Compile Include="Persistence\Services\Email\ForgotPasswordMessageBuilder.cs" />
+    <Compile Include="Persistence\Services\Email\MessageBuilder.cs" />
+    <Compile Include="Persistence\Services\HashGenerator.cs" />
+    <Compile Include="Persistence\Services\MembershipService.cs" />
+    <Compile Include="Persistence\Services\PasswordVerificationService.cs" />
+    <Compile Include="Persistence\Services\UserService.cs" />
+    <Compile Include="Persistence\Template\Email\ConfirmUser.cs">
+      <DependentUpon>ConfirmUser.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Persistence\Template\Email\ConfirmUserExtended.cs" />
+    <Compile Include="Persistence\Template\Email\ForgotPassword.cs">
+      <DependentUpon>ForgotPassword.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Persistence\Template\Email\ForgotPasswordExtended.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\SettingsRepository.cs" />
+    <Compile Include="Persistence\Repositories\PasswordVerificationRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserVerificationRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserRepository.cs" />
+    <Compile Include="Core\Services\IUserService.cs" />
+    <Compile Include="Persistence\ApplicationDbContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="Persistence\Template\Email\ConfirmUser.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ConfirmUser.cs</LastGenOutput>
+    </Content>
+    <Content Include="Persistence\Template\Email\ForgotPassword.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ForgotPassword.cs</LastGenOutput>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503210843158_InitialCreate.resx">
+      <DependentUpon>201503210843158_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503221659567_PasswordVerification.resx">
+      <DependentUpon>201503221659567_PasswordVerification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608080613016_EnhanceUserTable.resx">
+      <DependentUpon>201608080613016_EnhanceUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610100547365_AddAllIdentityTables.resx">
+      <DependentUpon>201610100547365_AddAllIdentityTables.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
