@@ -112,12 +112,8 @@
     <Compile Include="Core\SearchData\Pagination.cs" />
     <Compile Include="Core\SearchData\OrderBy.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
-    <Compile Include="Core\Enums\LoginStatus.cs" />
     <Compile Include="Core\Enums\SettingsName.cs" />
     <Compile Include="Core\Enums\SettingsType.cs" />
-    <Compile Include="Core\Enums\VerificationStatus.cs" />
-    <Compile Include="Core\Enums\UserStatus.cs" />
-    <Compile Include="Core\Enums\UserType.cs" />
     <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Core\Repositories\IRepositorySearch.cs" />
     <Compile Include="Core\Repositories\ISettingsRepository.cs" />
