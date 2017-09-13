@@ -127,6 +127,8 @@
     <Compile Include="Core\Services\Email\IEmailService.cs" />
     <Compile Include="Core\Services\Email\IForgotPasswordMessageBuilder.cs" />
     <Compile Include="Core\Services\Email\IMessageBuilder.cs" />
+    <Compile Include="Core\Services\IRoomStateService.cs" />
+    <Compile Include="Core\Services\IRoomService.cs" />
     <Compile Include="Migrations\201608080613016_EnhanceUserTable.cs" />
     <Compile Include="Migrations\201608080613016_EnhanceUserTable.Designer.cs">
       <DependentUpon>201608080613016_EnhanceUserTable.cs</DependentUpon>
@@ -167,6 +169,8 @@
     <Compile Include="Persistence\Services\Email\ForgotPasswordMessageBuilder.cs" />
     <Compile Include="Persistence\Services\Email\MessageBuilder.cs" />
     <Compile Include="Persistence\Services\HashGenerator.cs" />
+    <Compile Include="Persistence\Services\RoomStateService.cs" />
+    <Compile Include="Persistence\Services\RoomService.cs" />
     <Compile Include="Persistence\Template\Email\ConfirmUser.cs">
       <DependentUpon>ConfirmUser.tt</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -12,7 +12,7 @@ namespace EmptyRoomAlert.WebApi.Controllers.Resource
     {
         public HomeController(ILogger logger) : base(logger) { }
 
-        // GET: api/Home
+        // GET: Home
         public string Get()
         {
             return "API is running...";
