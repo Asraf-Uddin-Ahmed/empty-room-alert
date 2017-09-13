@@ -10,14 +10,15 @@ using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Repositories;
 using EmptyRoomAlert.Foundation.Core.Services.Email;
 using EmptyRoomAlert.Foundation.Persistence.Template.Email;
+using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
 
 namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
 {
     public class ForgotPasswordMessageBuilder : MessageBuilder, IForgotPasswordMessageBuilder
     {
-        private User _registeredUser;
+        private ApplicationUser _registeredUser;
         private string _url;
-        private User RegisteredUser
+        private ApplicationUser RegisteredUser
         {
             get
             {
@@ -55,7 +56,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
             : base(unitOfWork)
         { }
 
-        public void Build(User registeredUser, string url)
+        public void Build(ApplicationUser registeredUser, string url)
         {
             this.RegisteredUser = registeredUser;
             this.Url = url;
@@ -84,7 +85,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
         {
             return new List<NameWithEmail>() 
             { 
-                new NameWithEmail(this.RegisteredUser.Name, this.RegisteredUser.EmailAddress) 
+                new NameWithEmail(this.RegisteredUser.UserName, this.RegisteredUser.Email) 
             };
         }
 

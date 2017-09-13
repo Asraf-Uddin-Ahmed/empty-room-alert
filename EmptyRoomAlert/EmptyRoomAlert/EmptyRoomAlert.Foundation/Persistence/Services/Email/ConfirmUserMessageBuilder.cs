@@ -10,14 +10,15 @@ using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Repositories;
 using EmptyRoomAlert.Foundation.Core.Services.Email;
 using EmptyRoomAlert.Foundation.Persistence.Template.Email;
+using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
 
 namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
 {
     public class ConfirmUserMessageBuilder : MessageBuilder, IConfirmUserMessageBuilder
     {
-        private User _newUser;
+        private ApplicationUser _newUser;
         private string _url;
-        private User NewUser
+        private ApplicationUser NewUser
         {
             get
             {
@@ -55,7 +56,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
             : base(unitOfWork)
         { }
 
-        public void Build(User newUser, string url)
+        public void Build(ApplicationUser newUser, string url)
         {
             this.NewUser = newUser;
             this.Url = url;
@@ -84,7 +85,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services.Email
         {
             return new List<NameWithEmail>() 
             { 
-                new NameWithEmail(this.NewUser.Name, this.NewUser.EmailAddress) 
+                new NameWithEmail(this.NewUser.UserName, this.NewUser.Email) 
             };
         }
 

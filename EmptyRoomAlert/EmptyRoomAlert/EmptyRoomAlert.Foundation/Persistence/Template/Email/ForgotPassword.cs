@@ -31,7 +31,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Template.Email
             this.Write("\r\nHello ");
             
             #line 7 "F:\Group\act_r\empty-room-alert\EmptyRoomAlert\EmptyRoomAlert\EmptyRoomAlert.Foundation\Persistence\Template\Email\ForgotPassword.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(this.RegisteredUser.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.RegisteredUser.UserName));
             
             #line default
             #line hidden

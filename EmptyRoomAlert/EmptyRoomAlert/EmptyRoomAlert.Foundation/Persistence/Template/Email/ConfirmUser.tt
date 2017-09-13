@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
-Hello <#=this.NewUser.Name#>,
+Hello <#=this.NewUser.UserName#>,
 
 Your new account has been created. 
 To complete the registration process, please confirm your email address by clicking the link below:

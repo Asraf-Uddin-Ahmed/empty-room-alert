@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
-using EmptyRoomAlert.Foundation.Persistence.EntityConfigurations;
 
 namespace EmptyRoomAlert.Foundation.Persistence
 {
@@ -20,9 +19,6 @@ namespace EmptyRoomAlert.Foundation.Persistence
         public DbSet<Settings> Settings { get; set; }
 
 
-        public DbSet<User> ExtendedUsers { get; set; }
-        public DbSet<UserVerification> UserVerifications { get; set; }
-        public DbSet<PasswordVerification> PasswordVerifications { get; set; }
 
 
 
@@ -41,9 +37,6 @@ namespace EmptyRoomAlert.Foundation.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new PasswordVerificationConfiguration());
-            modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new UserVerificationConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

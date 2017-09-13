@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EmptyRoomAlert.Foundation.Core.Aggregates;
+using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
 
 namespace EmptyRoomAlert.Foundation.Persistence.Template.Email
 {
     public partial class ForgotPassword
     {
-        public User RegisteredUser
+        public ApplicationUser RegisteredUser
         {
             get;
             set;
@@ -20,7 +21,7 @@ namespace EmptyRoomAlert.Foundation.Persistence.Template.Email
             set;
         }
 
-        public ForgotPassword(User registeredUser, string url)
+        public ForgotPassword(ApplicationUser registeredUser, string url)
         {
             RegisteredUser = registeredUser;
             Url = url;
