@@ -105,9 +105,11 @@
     <Compile Include="Core\Aggregates\Identity\CustomUserLogin.cs" />
     <Compile Include="Core\Aggregates\Identity\CustomUserRole.cs" />
     <Compile Include="Core\Aggregates\Identity\RefreshToken.cs" />
+    <Compile Include="Core\Aggregates\Room.cs" />
     <Compile Include="Core\Aggregates\Settings.cs" />
     <Compile Include="Core\Constant\ApplicationRoles.cs" />
     <Compile Include="Core\Enums\ApplicationType.cs" />
+    <Compile Include="Core\Enums\RoomType.cs" />
     <Compile Include="Core\Factories\IApplicationUserFactory.cs" />
     <Compile Include="Core\SearchData\Pagination.cs" />
     <Compile Include="Core\SearchData\OrderBy.cs" />
@@ -134,6 +136,11 @@
     <Compile Include="Migrations\201709130624392_RemoveCustomUserRelatedSchema.Designer.cs">
       <DependentUpon>201709130624392_RemoveCustomUserRelatedSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709130842132_CreateRoomTable.cs" />
+    <Compile Include="Migrations\201709130842132_CreateRoomTable.Designer.cs">
+      <DependentUpon>201709130842132_CreateRoomTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\EntityConfigurations\RoomConfiguration.cs" />
     <Compile Include="Persistence\Factories\ApplicationUserFactory.cs" />
     <Compile Include="Migrations\201503210843158_InitialCreate.cs" />
     <Compile Include="Migrations\201503210843158_InitialCreate.Designer.cs">
@@ -199,13 +206,14 @@
     <EmbeddedResource Include="Migrations\201709130624392_RemoveCustomUserRelatedSchema.resx">
       <DependentUpon>201709130624392_RemoveCustomUserRelatedSchema.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709130842132_CreateRoomTable.resx">
+      <DependentUpon>201709130842132_CreateRoomTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistence\EntityConfigurations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

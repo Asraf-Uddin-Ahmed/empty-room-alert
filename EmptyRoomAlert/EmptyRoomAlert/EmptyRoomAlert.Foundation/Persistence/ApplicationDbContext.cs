@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
+using EmptyRoomAlert.Foundation.Persistence.EntityConfigurations;
 
 namespace EmptyRoomAlert.Foundation.Persistence
 {
@@ -16,6 +17,7 @@ namespace EmptyRoomAlert.Foundation.Persistence
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<Settings> Settings { get; set; }
 
 
@@ -37,6 +39,7 @@ namespace EmptyRoomAlert.Foundation.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new RoomConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
