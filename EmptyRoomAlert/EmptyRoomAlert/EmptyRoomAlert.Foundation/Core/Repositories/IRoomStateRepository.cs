@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Enums;
 using EmptyRoomAlert.Foundation.Core.Repositories;
+using EmptyRoomAlert.Foundation.Core.SearchData;
 
 namespace EmptyRoomAlert.Foundation.Core.Repositories
 {
-    public interface IRoomStateRepository : IRepository<RoomState>
+    public interface IRoomStateRepository : IRepositorySearch<RoomState, RoomStateSearch>
     {
         RoomState GetLastRecordByLogTime();
+        ICollection<RoomState> GetIncludedRoomByAndSearch(RoomStateSearch searchItem, Pagination pagination, OrderBy<RoomState> orderBy);
     }
 }

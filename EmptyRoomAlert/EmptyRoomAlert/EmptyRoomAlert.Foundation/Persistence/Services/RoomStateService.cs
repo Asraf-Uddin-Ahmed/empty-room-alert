@@ -2,6 +2,7 @@
 using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Enums;
 using EmptyRoomAlert.Foundation.Core.Factories;
+using EmptyRoomAlert.Foundation.Core.SearchData;
 using EmptyRoomAlert.Foundation.Core.Services;
 using Ninject;
 using Ninject.Extensions.Logging;
@@ -45,6 +46,15 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services
                 _unitOfWork.RoomStates.Add(roomState);
             }
             _unitOfWork.Commit();
+        }
+
+        public ICollection<RoomState> GetByAndSearch(RoomStateSearch searchItem, Pagination pagination, OrderBy<RoomState> orderBy)
+        {
+            return _unitOfWork.RoomStates.GetIncludedRoomByAndSearch(searchItem, pagination, orderBy);
+        }
+        public int GetTotalByAndSearch(RoomStateSearch searchItem)
+        {
+            return _unitOfWork.RoomStates.GetTotalAnd(searchItem);
         }
     }
 }

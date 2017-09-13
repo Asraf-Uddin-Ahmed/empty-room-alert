@@ -237,8 +237,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Codes\Core\Constant\UriName.cs" />
     <Compile Include="Codes\Core\Factories\Aggregates\IApplicationUserResponseFactory.cs" />
+    <Compile Include="Codes\Core\Factories\Aggregates\IRoomStateResponseFactory.cs" />
     <Compile Include="Codes\Core\Factories\Aggregates\IIdentityRoleResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\Aggregates\ApplicationUserResponseFactory.cs" />
+    <Compile Include="Codes\Persistence\Factories\Aggregates\RoomStateResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\Aggregates\IdentityRoleResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\ResponseFactory.cs" />
     <Compile Include="Configuration\ContextCapturingControllerActivator.cs" />
@@ -260,6 +262,8 @@
     <Compile Include="Controllers\Identity\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Models\Request\Account\ResetPasswordRequestModel.cs" />
+    <Compile Include="Models\Response\Aggregates\RoomResponseModel.cs" />
+    <Compile Include="Models\Response\Aggregates\RoomStateResponseModel.cs" />
     <Compile Include="Models\SortBy.cs" />
     <Compile Include="Models\Request\RequestModel.cs" />
     <Compile Include="Models\Request\RequestSearchModel.cs" />
