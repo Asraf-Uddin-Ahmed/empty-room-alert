@@ -12,12 +12,12 @@ namespace EmptyRoomAlert.Foundation.Persistence.Repositories
 {
     public class RoomStateRepository : Repository<RoomState>, IRoomStateRepository
     {
-        private ApplicationDbContext _context;
-        public RoomStateRepository(ApplicationDbContext context)
-            : base(context)
-        {
-            _context = context;
-        }
+        public RoomStateRepository(ApplicationDbContext context) : base(context) { }
 
+        public RoomState GetLastRecordByLogTime()
+        {
+            return base.dbSet.OrderByDescending(r => r.LogTime).FirstOrDefault();
+        }
+        
     }
 }

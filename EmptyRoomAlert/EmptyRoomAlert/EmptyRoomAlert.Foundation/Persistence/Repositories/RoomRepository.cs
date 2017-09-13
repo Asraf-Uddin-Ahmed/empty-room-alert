@@ -12,12 +12,11 @@ namespace EmptyRoomAlert.Foundation.Persistence.Repositories
 {
     public class RoomRepository : Repository<Room>, IRoomRepository
     {
-        private ApplicationDbContext _context;
-        public RoomRepository(ApplicationDbContext context)
-            : base(context)
-        {
-            _context = context;
-        }
+        public RoomRepository(ApplicationDbContext context) : base(context) { }
 
+        public Room GetFirstByType(RoomType type)
+        {
+            return base.dbSet.FirstOrDefault(r => r.Type == type);
+        }
     }
 }

@@ -26,9 +26,10 @@ namespace EmptyRoomAlert.WebApi.App_Start
             partialJsonMediaTypeFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //partialJsonMediaTypeFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "json", new MediaTypeHeaderValue("application/json")));
             httpConfig.Formatters.Add(partialJsonMediaTypeFormatter);
+            
             XmlMediaTypeFormatter xmlMediaTypeFormatter = new XmlMediaTypeFormatter();
             //xmlMediaTypeFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "xml", new MediaTypeHeaderValue("application/xml")));
-            httpConfig.Formatters.Add(xmlMediaTypeFormatter);
+            //httpConfig.Formatters.Add(xmlMediaTypeFormatter);
 
             httpConfig.MessageHandlers.Add(new XHttpMethodOverrideHandler());
             httpConfig.Services.Add(typeof(IExceptionLogger), new UnhandledExceptionLogger());

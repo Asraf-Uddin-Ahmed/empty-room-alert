@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Enums;
-using EmptyRoomAlert.Foundation.Core.Repositories;
+using EmptyRoomAlert.Foundation.Core.Aggregates.Identity;
 
-namespace EmptyRoomAlert.Foundation.Core.Repositories
+namespace EmptyRoomAlert.Foundation.Core.Factories
 {
-    public interface IRoomStateRepository : IRepository<RoomState>
+    public interface IRoomStateFactory
     {
-        RoomState GetLastRecordByLogTime();
+        RoomState Create();
     }
 }

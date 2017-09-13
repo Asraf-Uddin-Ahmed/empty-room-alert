@@ -8,5 +8,6 @@ namespace EmptyRoomAlert.Foundation.Core.Services
 {
     public interface IRoomStateService
     {
+        void GenerateValues(int timeInMinute, int frequencyInMinute);
     }
 }

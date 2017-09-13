@@ -111,6 +111,7 @@
     <Compile Include="Core\Constant\ApplicationRoles.cs" />
     <Compile Include="Core\Enums\ApplicationType.cs" />
     <Compile Include="Core\Enums\RoomType.cs" />
+    <Compile Include="Core\Factories\IRoomStateFactory.cs" />
     <Compile Include="Core\Factories\IApplicationUserFactory.cs" />
     <Compile Include="Core\Repositories\IRoomStateRepository.cs" />
     <Compile Include="Core\Repositories\IRoomRepository.cs" />
@@ -151,6 +152,7 @@
     </Compile>
     <Compile Include="Persistence\EntityConfigurations\RoomStateConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\RoomConfiguration.cs" />
+    <Compile Include="Persistence\Factories\RoomStateFactory.cs" />
     <Compile Include="Persistence\Factories\ApplicationUserFactory.cs" />
     <Compile Include="Migrations\201503210843158_InitialCreate.cs" />
     <Compile Include="Migrations\201503210843158_InitialCreate.Designer.cs">

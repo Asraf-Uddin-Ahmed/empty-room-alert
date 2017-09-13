@@ -52,9 +52,15 @@ namespace EmptyRoomAlert.Foundation.Migrations
                 PopulateSetingsTable(context);
             }
 
+            if (!context.Rooms.Any())
+            {
+                PopulateRoomsTable(context);
+            }
+
             context.SaveChanges();
         }
 
+        
         private static void PopulateRolesTable(RoleManager<CustomRole, Guid> roleManager)
         {
             roleManager.Create(new CustomRole { Id = GuidUtility.GetNewSequentialGuid(), Name = ApplicationRoles.ADMIN });
@@ -105,5 +111,16 @@ namespace EmptyRoomAlert.Foundation.Migrations
             };
             listSettings.ForEach(s => context.Settings.AddOrUpdate(p => p.ID, s));
         }
+        private static void PopulateRoomsTable(ApplicationDbContext context)
+        {
+            List<Room> listRooms = new List<Room>
+            {
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 1", Name = "Class Room", Type = RoomType.ClassRoom},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 2", Name = "Your Room", Type = RoomType.Normal},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 3", Name = "Parking Lot", Type = RoomType.ParkingLot},
+            };
+            listRooms.ForEach(s => context.Rooms.AddOrUpdate(p => p.ID, s));
+        }
+        
     }
 }
