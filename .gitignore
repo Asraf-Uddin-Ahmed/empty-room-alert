@@ -250,6 +250,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/Examlog/Examlog/Examlog.WebApi/logs
-/examlog_publish/logs
-/Examlog/Examlog/Examlog.WebApi/bin
+/EmptyRoomAlert/EmptyRoomAlert/EmptyRoomAlert.WebApi/bin
