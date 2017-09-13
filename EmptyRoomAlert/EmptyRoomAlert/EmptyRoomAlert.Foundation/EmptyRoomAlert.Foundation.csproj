@@ -105,39 +105,40 @@
     <Compile Include="Core\Aggregates\Identity\CustomUserLogin.cs" />
     <Compile Include="Core\Aggregates\Identity\CustomUserRole.cs" />
     <Compile Include="Core\Aggregates\Identity\RefreshToken.cs" />
-    <Compile Include="Core\Aggregates\Settings.cs" />
     <Compile Include="Core\Aggregates\PasswordVerification.cs" />
-    <Compile Include="Core\Aggregates\UserVerification.cs" />
+    <Compile Include="Core\Aggregates\Settings.cs" />
     <Compile Include="Core\Aggregates\User.cs" />
+    <Compile Include="Core\Aggregates\UserVerification.cs" />
     <Compile Include="Core\Constant\ApplicationRoles.cs" />
     <Compile Include="Core\Enums\ApplicationType.cs" />
     <Compile Include="Core\Factories\IApplicationUserFactory.cs" />
+    <Compile Include="Core\Factories\IPasswordVerificationFactory.cs" />
+    <Compile Include="Core\Factories\IUserFactory.cs" />
+    <Compile Include="Core\Factories\IUserVerificationFactory.cs" />
+    <Compile Include="Core\Repositories\IPasswordVerificationRepository.cs" />
+    <Compile Include="Core\Repositories\IUserRepository.cs" />
+    <Compile Include="Core\Repositories\IUserVerificationRepository.cs" />
     <Compile Include="Core\SearchData\Pagination.cs" />
     <Compile Include="Core\SearchData\OrderBy.cs" />
-    <Compile Include="Core\Factories\IPasswordVerificationFactory.cs" />
-    <Compile Include="Core\Factories\IUserVerificationFactory.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
-    <Compile Include="Core\SearchData\UserSearch.cs" />
     <Compile Include="Core\Enums\LoginStatus.cs" />
     <Compile Include="Core\Enums\SettingsName.cs" />
     <Compile Include="Core\Enums\SettingsType.cs" />
     <Compile Include="Core\Enums\VerificationStatus.cs" />
     <Compile Include="Core\Enums\UserStatus.cs" />
     <Compile Include="Core\Enums\UserType.cs" />
-    <Compile Include="Core\Factories\IUserFactory.cs" />
-    <Compile Include="Core\Repositories\IPasswordVerificationRepository.cs" />
     <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Core\Repositories\IRepositorySearch.cs" />
     <Compile Include="Core\Repositories\ISettingsRepository.cs" />
-    <Compile Include="Core\Repositories\IUserRepository.cs" />
-    <Compile Include="Core\Repositories\IUserVerificationRepository.cs" />
     <Compile Include="Core\SearchData\EntitySearch.cs" />
+    <Compile Include="Core\SearchData\UserSearch.cs" />
     <Compile Include="Core\Services\Email\IConfirmUserMessageBuilder.cs" />
     <Compile Include="Core\Services\Email\IEmailService.cs" />
     <Compile Include="Core\Services\Email\IForgotPasswordMessageBuilder.cs" />
     <Compile Include="Core\Services\Email\IMessageBuilder.cs" />
     <Compile Include="Core\Services\IMembershipService.cs" />
     <Compile Include="Core\Services\IPasswordVerificationService.cs" />
+    <Compile Include="Core\Services\IUserService.cs" />
     <Compile Include="Migrations\201608080613016_EnhanceUserTable.cs" />
     <Compile Include="Migrations\201608080613016_EnhanceUserTable.Designer.cs">
       <DependentUpon>201608080613016_EnhanceUserTable.cs</DependentUpon>
@@ -190,7 +191,6 @@
     <Compile Include="Persistence\Repositories\PasswordVerificationRepository.cs" />
     <Compile Include="Persistence\Repositories\UserVerificationRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
-    <Compile Include="Core\Services\IUserService.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
