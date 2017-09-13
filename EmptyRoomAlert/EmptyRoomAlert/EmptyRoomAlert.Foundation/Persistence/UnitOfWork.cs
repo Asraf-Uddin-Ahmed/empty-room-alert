@@ -15,6 +15,8 @@ namespace EmptyRoomAlert.Foundation.Persistence
     {
         private ApplicationDbContext _context;
 
+        private IRoomRepository _rooms;
+        private IRoomStateRepository _roomStates;
         private ISettingsRepository _settings;
 
         [Inject]
@@ -24,7 +26,28 @@ namespace EmptyRoomAlert.Foundation.Persistence
         }
 
 
-
+        public IRoomRepository Rooms
+        {
+            get
+            {
+                if (_rooms == null)
+                {
+                    _rooms = new RoomRepository(_context);
+                }
+                return _rooms;
+            }
+        }
+        public IRoomStateRepository RoomStates
+        {
+            get
+            {
+                if (_roomStates == null)
+                {
+                    _roomStates = new RoomStateRepository(_context);
+                }
+                return _roomStates;
+            }
+        }
         public ISettingsRepository Settings
         {
             get

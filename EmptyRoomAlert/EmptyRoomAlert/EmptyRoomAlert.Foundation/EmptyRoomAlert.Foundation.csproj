@@ -112,6 +112,8 @@
     <Compile Include="Core\Enums\ApplicationType.cs" />
     <Compile Include="Core\Enums\RoomType.cs" />
     <Compile Include="Core\Factories\IApplicationUserFactory.cs" />
+    <Compile Include="Core\Repositories\IRoomStateRepository.cs" />
+    <Compile Include="Core\Repositories\IRoomRepository.cs" />
     <Compile Include="Core\SearchData\Pagination.cs" />
     <Compile Include="Core\SearchData\OrderBy.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
@@ -158,6 +160,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\Repositories\RepositorySearch.cs" />
+    <Compile Include="Persistence\Repositories\RoomStateRepository.cs" />
+    <Compile Include="Persistence\Repositories\RoomRepository.cs" />
     <Compile Include="Persistence\Services\Email\EmailService.cs" />
     <Compile Include="Persistence\Services\Email\ConfirmUserMessageBuilder.cs" />
     <Compile Include="Persistence\Services\Email\ForgotPasswordMessageBuilder.cs" />

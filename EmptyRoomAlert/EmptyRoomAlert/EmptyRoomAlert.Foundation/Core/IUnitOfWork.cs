@@ -9,6 +9,8 @@ namespace EmptyRoomAlert.Foundation.Core
 {
     public interface IUnitOfWork : IDisposable
     {
+        IRoomRepository Rooms { get; }
+        IRoomStateRepository RoomStates { get; }
         ISettingsRepository Settings { get; }
 
 
