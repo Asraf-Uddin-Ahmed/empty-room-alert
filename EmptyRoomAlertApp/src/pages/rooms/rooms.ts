@@ -12,25 +12,25 @@ import { RoomDetailsPage } from '../room-details/room-details';
 })
 export class RoomsPage {
   icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: Array<{ title: string, note: string, icon: string }>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private remoteService : RemoteServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private remoteService: RemoteServiceProvider) {
     this.icons = ['star', 'person', 'book', 'car'];
 
     this.getRooms();
   }
 
-  getRooms(){
+  getRooms() {
     this.remoteService.get("rooms").subscribe(data => {
       this.items = data;
       console.log(data);
     }, err => {
       console.log("Oops!");
     });
-}
-  itemTapped(event, item) {
+  }
+  itemTapped(event, room) {
     this.navCtrl.push(RoomDetailsPage, {
-      item: item
+      room: room
     });
   }
 }

@@ -1,3 +1,11 @@
 page-room-details {
-
+    .empty-room {
+        color: green;
+    }
+    .non-empty-room {
+        color: red;
+    }
+    .no-data {
+        color: orangered;
+    }
 }

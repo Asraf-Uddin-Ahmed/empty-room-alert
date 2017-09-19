@@ -1,18 +1,34 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
+    <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Item Details</ion-title>
+    <ion-title>Room Details</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.title}}
-    <ion-icon [name]="selectedItem.icon"></ion-icon>
-  </h3>
-  <h4 text-center *ngIf="selectedItem">
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </h4>
+  <div *ngIf="isRequestCompleted">
+    <div text-center>
+      <h3>
+        {{selectedRoom.name}}
+      </h3>
+
+      <h1 *ngIf="roomStateWithRoom">
+        <ion-icon name="checkmark-circle" *ngIf="roomStateWithRoom.isEmpty" class="empty-room"></ion-icon>
+        <ion-icon name="close-circle" *ngIf="!roomStateWithRoom.isEmpty" class="non-empty-room"></ion-icon>
+      </h1>
+      <h1 *ngIf="!roomStateWithRoom" class="no-data">
+        No data found
+      </h1>
+
+      <h5>
+        <i>{{selectedRoom.address}}</i>
+      </h5>
+    </div>
+  </div>
+
+  <div *ngIf="!isRequestCompleted">
+    <h1>Loading...</h1>
+  </div>
 </ion-content>
