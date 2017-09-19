@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ItemDetailsPage } from '../item-details/item-details';
+import { RoomDetailsPage } from '../room-details/room-details';
 
 @Component({
   selector: 'page-rooms',
@@ -27,7 +27,7 @@ export class RoomsPage {
   }
 
   itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
+    this.navCtrl.push(RoomDetailsPage, {
       item: item
     });
   }
