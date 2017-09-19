@@ -237,9 +237,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Codes\Core\Constant\UriName.cs" />
     <Compile Include="Codes\Core\Factories\Aggregates\IApplicationUserResponseFactory.cs" />
+    <Compile Include="Codes\Core\Factories\Aggregates\IRoomResponseFactory.cs" />
     <Compile Include="Codes\Core\Factories\Aggregates\IRoomStateResponseFactory.cs" />
     <Compile Include="Codes\Core\Factories\Aggregates\IIdentityRoleResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\Aggregates\ApplicationUserResponseFactory.cs" />
+    <Compile Include="Codes\Persistence\Factories\Aggregates\RoomResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\Aggregates\RoomStateResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\Aggregates\IdentityRoleResponseFactory.cs" />
     <Compile Include="Codes\Persistence\Factories\ResponseFactory.cs" />
