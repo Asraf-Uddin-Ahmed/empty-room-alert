@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 
@@ -14,7 +14,11 @@ export class RoomsPage {
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private remoteService: RemoteServiceProvider) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private remoteService: RemoteServiceProvider,
+    private alertCtrl: AlertController
+  ) {
     this.icons = ['star', 'person', 'book', 'car'];
 
     this.getRooms();
@@ -25,7 +29,13 @@ export class RoomsPage {
       this.items = data;
       console.log(data);
     }, err => {
-      console.log("Oops!");
+      console.log("Failed to getRooms", err);
+      let alert = this.alertCtrl.create({
+        title: 'Failed to getRooms',
+        subTitle: err,
+        buttons: ['OK']
+      });
+      alert.present();
     });
   }
   itemTapped(event, room) {

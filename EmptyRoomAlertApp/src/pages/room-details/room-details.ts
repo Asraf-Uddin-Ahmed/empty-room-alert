@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 
@@ -13,7 +13,11 @@ export class RoomDetailsPage {
   roomStateWithRoom: any;
   isRequestCompleted = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private remoteService: RemoteServiceProvider) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private remoteService: RemoteServiceProvider,
+    private alertCtrl: AlertController
+  ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedRoom = navParams.get('room');
     this.getRoomDetail();
@@ -28,8 +32,15 @@ export class RoomDetailsPage {
       console.log(data, this.roomStateWithRoom);
       this.isRequestCompleted = true;
     }, err => {
-      console.log("Oops!");
       this.isRequestCompleted = true;
+      console.log("Failed to getRoomDetail", err);
+
+      let alert = this.alertCtrl.create({
+        title: 'Failed to getRoomDetail',
+        subTitle: err,
+        buttons: ['OK']
+      });
+      alert.present();
     });
   }
 }
