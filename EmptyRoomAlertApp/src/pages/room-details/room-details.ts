@@ -24,7 +24,7 @@ export class RoomDetailsPage {
       + "&searchItem.LogTimeFrom=" + new Date().toLocaleString()
       + "&sortBy.fieldName=LogTime&sortBy.isAscending=true&pagination.displayStart=0&pagination.displaySize=3";
     this.remoteService.get(endPoint).subscribe(data => {
-      this.roomStateWithRoom = data.items[0];
+      this.roomStateWithRoom = data.items.length ? data.items[0] : null;
       console.log(data, this.roomStateWithRoom);
       this.isRequestCompleted = true;
     }, err => {
