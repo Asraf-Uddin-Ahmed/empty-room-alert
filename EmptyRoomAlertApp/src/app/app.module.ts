@@ -11,6 +11,9 @@ import { RoomsPage } from '../pages/rooms/rooms';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BackgroundMode } from '@ionic-native/background-mode';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 
 @NgModule({
@@ -36,7 +39,9 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RemoteServiceProvider
+    RemoteServiceProvider,
+    BackgroundMode,
+    LocalNotifications
   ]
 })
 export class AppModule {}
