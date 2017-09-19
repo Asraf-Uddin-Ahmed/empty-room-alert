@@ -23,30 +23,32 @@ export class HomePage {
 
   private runInBackground() {
     let intervalInMiliSecond = 30000;
-    // let fnNotify = this.notifyRoomStateChange;
+    let rmtService = this.remoteService;
+    let lclNotifications = this.localNotifications;
+    let fnNotify = this.notifyRoomStateChange;
 
     console.log("foreground process");
-    // fnNotify(intervalInMiliSecond);
+    fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
 
     this.backgroundMode.enable();
     this.backgroundMode.on("activate").subscribe(() => {
       setInterval(function () {
         console.log("background process");
-        // fnNotify(intervalInMiliSecond);
+        fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
       }, intervalInMiliSecond);
     });
   }
 
-  private notifyRoomStateChange(intervalInMiliSecond) {
+  private notifyRoomStateChange(intervalInMiliSecond: number, rmtService: RemoteServiceProvider, lclNotifications: LocalNotifications) {
     let start = new Date();
     let end = new Date();
     end.setMilliseconds(end.getMilliseconds() + intervalInMiliSecond);
 
     let endPoint = "room-states?searchItem.LogTimeFrom=" + start.toLocaleString()
-      + "searchItem.LogTimeTo=" + end.toLocaleString()
+      + "&searchItem.LogTimeTo=" + end.toLocaleString()
       + "&sortBy.fieldName=LogTime&sortBy.isAscending=true&pagination.displayStart=0&pagination.displaySize=100";
 
-    this.remoteService.get(endPoint).subscribe(data => {
+    rmtService.get(endPoint).subscribe(data => {
       let arrRoomStateWithRoom = data.items;
       console.log(arrRoomStateWithRoom);
 
@@ -54,12 +56,13 @@ export class HomePage {
       for (let I = 0; I < arrRoomStateWithRoom.length; I++) {
         arrNotification.push({
           id: I,
+          title: "Empty Room Alert",
           text: arrRoomStateWithRoom[I].room.name + ' has been ' + arrRoomStateWithRoom[I].isEmpty ? 'empty' : 'booked' + ' now',
           data: arrRoomStateWithRoom[I].room.address
         });
       }
       console.log(arrNotification);
-      this.localNotifications.schedule(arrNotification);
+      lclNotifications.schedule(arrNotification);
     }, err => {
       console.log("Oops!");
     });
