@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmptyRoomAlert.Foundation.Core.Aggregates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace EmptyRoomAlert.Foundation.Core.Services
 {
     public interface IRoomService
     {
+        ICollection<Room> GetAll();
     }
 }

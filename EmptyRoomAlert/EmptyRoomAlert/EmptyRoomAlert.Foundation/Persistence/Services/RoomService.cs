@@ -1,4 +1,5 @@
 ﻿using EmptyRoomAlert.Foundation.Core;
+using EmptyRoomAlert.Foundation.Core.Aggregates;
 using EmptyRoomAlert.Foundation.Core.Services;
 using Ninject;
 using Ninject.Extensions.Logging;
@@ -20,6 +21,11 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+        }
+
+        public ICollection<Room> GetAll()
+        {
+            return _unitOfWork.Rooms.GetAll();
         }
     }
 }
