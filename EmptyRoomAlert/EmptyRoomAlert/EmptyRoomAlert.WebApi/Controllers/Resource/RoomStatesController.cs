@@ -33,7 +33,7 @@ namespace EmptyRoomAlert.WebApi.Controllers.Resource
         [HttpGet]
         public IHttpActionResult GenerateRoomStates()
         {
-            int timeInMinute = 30;
+            int timeInMinute = 60;
             try
             {
                 _roomStateService.GenerateValues(timeInMinute, 2);
