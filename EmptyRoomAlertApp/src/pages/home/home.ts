@@ -27,16 +27,17 @@ export class HomePage {
     let lclNotifications = this.localNotifications;
     let fnNotify = this.notifyRoomStateChange;
 
-    console.log("foreground process");
-    fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
-
     this.backgroundMode.enable();
     this.backgroundMode.on("activate").subscribe(() => {
+      console.log("activating background process");
       setInterval(function () {
         console.log("background process");
         fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
       }, intervalInMiliSecond);
     });
+
+    console.log("foreground process");
+    fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
   }
 
   private notifyRoomStateChange(intervalInMiliSecond: number, rmtService: RemoteServiceProvider, lclNotifications: LocalNotifications) {
@@ -56,8 +57,8 @@ export class HomePage {
       for (let I = 0; I < arrRoomStateWithRoom.length; I++) {
         arrNotification.push({
           id: I,
-          title: "Empty Room Alert",
-          text: arrRoomStateWithRoom[I].room.name + ' has been ' + arrRoomStateWithRoom[I].isEmpty ? 'empty' : 'booked' + ' now',
+          title: arrRoomStateWithRoom[I].room.name + ' has been ' + (arrRoomStateWithRoom[I].isEmpty ? 'empty' : 'booked') + ' now',
+          text: arrRoomStateWithRoom[I].room.address,
           data: arrRoomStateWithRoom[I].room.address
         });
       }

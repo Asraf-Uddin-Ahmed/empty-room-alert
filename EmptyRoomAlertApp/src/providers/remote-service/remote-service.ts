@@ -15,7 +15,7 @@ export class RemoteServiceProvider {
     console.log('Hello RemoteServiceProvider Provider');
   }
 
-  apiBaseUrl: string = "http://localhost:5000/";
+  apiBaseUrl: string = "http://o167728-001-site1.etempurl.com/";
 
   get(endPoint) {
     return this.http.get(this.apiBaseUrl + endPoint).map(res => res.json());
