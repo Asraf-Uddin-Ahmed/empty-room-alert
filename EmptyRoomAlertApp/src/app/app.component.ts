@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { AppMinimize } from '@ionic-native/app-minimize';
 
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 
@@ -30,7 +31,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private remoteService: RemoteServiceProvider,
     private backgroundMode: BackgroundMode,
-    private localNotifications: LocalNotifications
+    private localNotifications: LocalNotifications,
+    private appMinimize: AppMinimize
   ) {
     this.initializeApp();
 
@@ -45,27 +47,32 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.runInBackground();
+      this.platform.registerBackButtonAction(() => {
+        console.log("inside registerBackButtonAction");
+        this.appMinimize.minimize();
+      });
+      this.pullNotificationData();
       
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
-  private runInBackground() {
+  private pullNotificationData() {
     let intervalInMiliSecond = 30000;
     let rmtService = this.remoteService;
     let lclNotifications = this.localNotifications;
     let fnNotify = this.notifyRoomStateChange;
 
-    this.backgroundMode.enable();
-    this.backgroundMode.on("activate").subscribe(() => {
-      console.log("activating background process");
-      setInterval(function () {
-        console.log("background process");
-        // fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
-      }, intervalInMiliSecond);
-    });
+    // this.backgroundMode.enable();
+    // this.backgroundMode.overrideBackButton();
+    // this.backgroundMode.on("activate").subscribe(() => {
+    //   console.log("activating background process");
+    //   setInterval(function () {
+    //     console.log("background process");
+    //     // fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
+    //   }, intervalInMiliSecond);
+    // });
 
     setInterval(function () {
       console.log("foreground process");
