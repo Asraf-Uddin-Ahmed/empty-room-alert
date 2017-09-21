@@ -36,8 +36,9 @@ namespace EmptyRoomAlert.WebApi.Controllers.Resource
             int timeInMinute = 60;
             try
             {
-                _roomStateService.GenerateValues(timeInMinute, 2);
-                return Ok("Random room state values have generated for " + timeInMinute.ToString() + " minutes.");
+                DateTime endLogTimeOfGeneration = _roomStateService.GenerateValues(timeInMinute, 2);
+                DateTime startLogTimeOfGeneration = endLogTimeOfGeneration.AddMinutes(-timeInMinute);
+                return Ok("Random room state values have been generated from " + startLogTimeOfGeneration + " to " + endLogTimeOfGeneration);
             }
             catch (Exception ex)
             {

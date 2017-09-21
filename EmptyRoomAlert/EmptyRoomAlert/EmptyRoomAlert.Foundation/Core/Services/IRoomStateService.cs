@@ -10,7 +10,7 @@ namespace EmptyRoomAlert.Foundation.Core.Services
 {
     public interface IRoomStateService
     {
-        void GenerateValues(int timeInMinute, int frequencyInMinute);
+        DateTime GenerateValues(int timeInMinute, int frequencyInMinute);
         ICollection<RoomState> GetByAndSearch(RoomStateSearch searchItem, Pagination pagination, OrderBy<RoomState> orderBy);
         int GetTotalByAndSearch(RoomStateSearch searchItem);
     }

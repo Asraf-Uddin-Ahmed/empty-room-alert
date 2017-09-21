@@ -29,23 +29,24 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void GenerateValues(int timeInMinute, int frequencyInMinute)
+        public DateTime GenerateValues(int timeInMinute, int frequencyInMinute)
         {
             RoomState lastRoomState = _unitOfWork.RoomStates.GetLastRecordByLogTime();
             DateTime currentLogTime = lastRoomState == null ? DateTime.Now : lastRoomState.LogTime;
             int totalRecord = timeInMinute * frequencyInMinute;
             int timeIntervalInSecond = 60 / frequencyInMinute;
-            int totalMemberInRoomType = Enum.GetNames(typeof(RoomType)).Length;
+            List<Room> rooms = _unitOfWork.Rooms.GetAll().ToList();
             for (int I = 0; I < totalRecord; I++)
             {
                 currentLogTime = currentLogTime.AddSeconds(timeIntervalInSecond);
                 RoomState roomState = _roomStateFactory.Create();
-                roomState.IsEmpty = (I / totalMemberInRoomType) % 2 == 0;
+                roomState.IsEmpty = (I / rooms.Count) % 2 == 0;
                 roomState.LogTime = currentLogTime;
-                roomState.Room = _unitOfWork.Rooms.GetFirstByType((RoomType)(I % totalMemberInRoomType + 1));
+                roomState.Room = rooms[I % rooms.Count];
                 _unitOfWork.RoomStates.Add(roomState);
             }
             _unitOfWork.Commit();
+            return currentLogTime;
         }
 
         public ICollection<RoomState> GetByAndSearch(RoomStateSearch searchItem, Pagination pagination, OrderBy<RoomState> orderBy)
