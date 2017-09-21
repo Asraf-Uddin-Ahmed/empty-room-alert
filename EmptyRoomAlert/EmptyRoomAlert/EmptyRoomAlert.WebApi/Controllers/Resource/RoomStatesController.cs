@@ -29,11 +29,10 @@ namespace EmptyRoomAlert.WebApi.Controllers.Resource
             _roomStateService = roomStateService;
         }
 
-        [Route("room-states/generate")]
+        [Route("room-states/generate/time-in-minute/{timeInMinute}/frequency-in-minute/{frequencyInMinute}")]
         [HttpGet]
-        public IHttpActionResult GenerateRoomStates()
+        public IHttpActionResult GenerateRoomStates(int timeInMinute, int frequencyInMinute)
         {
-            int timeInMinute = 60;
             try
             {
                 DateTime endLogTimeOfGeneration = _roomStateService.GenerateValues(timeInMinute, 2);
