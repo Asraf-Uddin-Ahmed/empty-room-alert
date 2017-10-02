@@ -15,6 +15,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AppMinimize } from '@ionic-native/app-minimize';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Network } from '@ionic-native/network';
 
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 
@@ -45,7 +46,8 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     BackgroundMode,
     LocalNotifications,
     Geolocation,
-    AppMinimize
+    AppMinimize,
+    Network
   ]
 })
 export class AppModule {}
