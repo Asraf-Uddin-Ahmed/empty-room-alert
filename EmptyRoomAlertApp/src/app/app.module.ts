@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AppMinimize } from '@ionic-native/app-minimize';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 
@@ -43,6 +44,7 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     RemoteServiceProvider,
     BackgroundMode,
     LocalNotifications,
+    Geolocation,
     AppMinimize
   ]
 })
