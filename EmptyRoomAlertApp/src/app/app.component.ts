@@ -43,7 +43,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Rooms', component: RoomsPage }
+      { title: 'Spots', component: RoomsPage }
     ];
   }
 
