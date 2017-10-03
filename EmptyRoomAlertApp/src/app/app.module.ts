@@ -16,8 +16,10 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AppMinimize } from '@ionic-native/app-minimize';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Network } from '@ionic-native/network';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
+import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 
 @NgModule({
   declarations: [
@@ -42,12 +44,14 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RemoteServiceProvider,
     BackgroundMode,
     LocalNotifications,
     Geolocation,
+    BackgroundGeolocation,
     AppMinimize,
-    Network
+    Network,
+    RemoteServiceProvider,
+    LocationTrackerProvider
   ]
 })
 export class AppModule {}

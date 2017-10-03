@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
 import { RoomsPage } from '../rooms/rooms';
 
 
@@ -17,16 +19,26 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(private navCtrl: NavController, private geolocation: Geolocation) {
+  constructor(private navCtrl: NavController, 
+    private geolocation: Geolocation, 
+    private locationTracker: LocationTrackerProvider
+  ) {
     
   }
-
+  ionViewDidLoad() {
+    this.loadMap();
+  }
+  
   enterRoom(event) {
     this.navCtrl.push(RoomsPage);
   }
-
-  ionViewDidLoad() {
-    this.loadMap();
+  
+  start(){
+    this.locationTracker.startTracking();
+  }
+ 
+  stop(){
+    this.locationTracker.stopTracking();
   }
 
   loadMap() {
