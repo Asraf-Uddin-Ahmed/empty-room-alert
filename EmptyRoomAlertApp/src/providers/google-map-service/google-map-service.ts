@@ -15,14 +15,19 @@ declare var google;
 export class GoogleMapServiceProvider {
 
   map: any;
-  
+
   constructor(private geolocation: Geolocation) {
     console.log('Hello GoogleMapServiceProvider Provider');
   }
 
 
   loadMap(mapElement: ElementRef) {
-    
+    if (typeof google != 'object') {
+      console.log("Map not loaded");
+      return;
+    }
+
+    console.log("Map loaded");
     this.geolocation.getCurrentPosition().then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
