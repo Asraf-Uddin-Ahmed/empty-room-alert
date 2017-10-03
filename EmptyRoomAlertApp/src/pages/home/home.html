@@ -11,15 +11,15 @@
 <ion-content padding>
 
   <button ion-button color="primary" (click)="enterRoom($event)" block icon-end>
-    Enter All Rooms  
+    Enter  
     <ion-icon name="log-in"></ion-icon>
   </button>
 
-  <br>
+  <!-- <br>
   <h3>Current Latitude: {{locationTracker.lat}}</h3>
   <h3>Current Longitude: {{locationTracker.lng}}</h3>
   <button ion-button full primary (click)="start()">Start Tracking</button>
-  <button ion-button full primary (click)="stop()">Stop Tracking</button>
+  <button ion-button full primary (click)="stop()">Stop Tracking</button> -->
 
   <br>
   <!-- <ion-buttons end>
@@ -27,4 +27,6 @@
   </ion-buttons>  -->
   <div #map id="map"></div> 
 
+  <p text-right>{{locationTracker.lat}}, {{locationTracker.lng}}</p>
+  
 </ion-content>

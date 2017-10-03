@@ -33,13 +33,13 @@ export class HomePage {
     this.navCtrl.push(RoomsPage);
   }
   
-  start(){
-    this.locationTracker.startTracking();
-  }
+  // start(){
+  //   this.locationTracker.startForegroundTracking();
+  // }
  
-  stop(){
-    this.locationTracker.stopTracking();
-  }
+  // stop(){
+  //   this.locationTracker.stopForegroundTracking();
+  // }
 
   loadMap() {
     
@@ -59,7 +59,6 @@ export class HomePage {
     }, (err) => {
       console.log(err);
     });
-
   }
 
   private addMarker() {
@@ -74,7 +73,6 @@ export class HomePage {
     let content = "<h3>You are here</h3>";
 
     this.addInfoWindow(marker, content);
-
   }
   private addInfoWindow(marker, content) {
 
@@ -85,7 +83,6 @@ export class HomePage {
     google.maps.event.addListener(marker, 'click', () => {
       infoWindow.open(this.map, marker);
     });
-
   }
 
 }

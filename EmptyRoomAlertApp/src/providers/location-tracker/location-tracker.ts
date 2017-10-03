@@ -23,21 +23,9 @@ export class LocationTrackerProvider {
     console.log('Hello LocationTrackerProvider Provider');
   }
 
-  startTracking() {
-    console.log('startTracking');
-    this.startBckgroundTracking();
-    this.startForegroundTracking();
-  }
-
-  stopTracking() {
-    console.log('stopTracking');
-    this.backgroundGeolocation.finish();
-    this.watch.unsubscribe();
-  }
-
-
-
-  private startBckgroundTracking() {
+  
+  startBckgroundTracking() {
+    console.log('startBckgroundTracking');
     let config = {
       desiredAccuracy: 0,
       stationaryRadius: 20,
@@ -47,7 +35,6 @@ export class LocationTrackerProvider {
     };
 
     this.backgroundGeolocation.configure(config).subscribe((location) => {
-
       console.log('BackgroundGeolocation:  ' + location.latitude + ',' + location.longitude);
 
       // Run update inside of Angular's zone
@@ -55,32 +42,40 @@ export class LocationTrackerProvider {
         this.lat = location.latitude;
         this.lng = location.longitude;
       });
-
+      
     }, (err) => {
-
       console.log(err);
-
     });
 
     // Turn ON the background-geolocation system.
     this.backgroundGeolocation.start();
   }
-  private startForegroundTracking() {
+
+  startForegroundTracking() {
+    console.log('startForegroundTracking');
     let options = {
       frequency: 3000,
       enableHighAccuracy: true
     };
 
     this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
-
-      console.log(position);
+      console.log('ForegroundGeolocation:  ', position);
 
       // Run update inside of Angular's zone
       this.zone.run(() => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
       });
-
     });
+  }
+
+  stopBackgroundTracking() {
+    console.log('stopBackgroundTracking');
+    this.backgroundGeolocation.finish();
+  }
+
+  stopForegroundTracking() {
+    console.log('stopForegroundTracking');
+    this.watch.unsubscribe();
   }
 }

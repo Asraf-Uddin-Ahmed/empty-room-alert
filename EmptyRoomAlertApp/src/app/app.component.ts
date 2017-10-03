@@ -13,6 +13,7 @@ import { AppMinimize } from '@ionic-native/app-minimize';
 import { Network } from '@ionic-native/network';
 
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
+import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class MyApp {
     private localNotifications: LocalNotifications,
     private appMinimize: AppMinimize,
     private network: Network,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private locationTracker: LocationTrackerProvider
   ) {
     this.initializeApp();
 
@@ -57,6 +59,7 @@ export class MyApp {
       this.pullNotificationData();
       
       this.initializeNetworkConnectivityChecker();
+      this.locationTracker.startForegroundTracking();
       
       this.statusBar.styleDefault();
       this.splashScreen.hide();
