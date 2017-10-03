@@ -1,0 +1,14 @@
+network-status {
+    .circle {
+        border-radius: 50%;
+        width: 20px;
+        height: 20px; 
+        float: right;
+    }
+    .circle-red {
+        background-color: red;
+    }
+    .circle-green {
+        background-color: green;
+    }
+}

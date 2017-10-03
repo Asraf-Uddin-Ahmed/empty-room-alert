@@ -18,6 +18,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Network } from '@ionic-native/network';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
+import { ComponentsModule } from '../components/components.module';
+
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { GoogleMapServiceProvider } from '../providers/google-map-service/google-map-service';
@@ -33,7 +35,8 @@ import { NetworkServiceProvider } from '../providers/network-service/network-ser
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

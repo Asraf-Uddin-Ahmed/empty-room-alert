@@ -1,0 +1,6 @@
+<!-- Generated template for the NetworkStatusComponent component -->
+
+<div class="circle" [ngClass]="{
+  'circle-green' : networkServiceProvider.isOnline(), 
+  'circle-red': !networkServiceProvider.isOnline()}">
+</div>
