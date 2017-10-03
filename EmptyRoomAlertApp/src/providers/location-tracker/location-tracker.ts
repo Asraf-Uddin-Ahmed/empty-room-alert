@@ -20,7 +20,7 @@ export class LocationTrackerProvider {
     private backgroundGeolocation: BackgroundGeolocation,
     private geolocation: Geolocation
   ) {
-    console.log('Hello LocationTrackerProvider Provider');
+    // console.log('Hello LocationTrackerProvider Provider');
   }
 
   

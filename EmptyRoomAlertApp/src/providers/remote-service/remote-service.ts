@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class RemoteServiceProvider {
 
   constructor(public http: Http) {
-    console.log('Hello RemoteServiceProvider Provider');
+    // console.log('Hello RemoteServiceProvider Provider');
   }
 
   apiBaseUrl: string = "http://o167728-001-site1.etempurl.com/";

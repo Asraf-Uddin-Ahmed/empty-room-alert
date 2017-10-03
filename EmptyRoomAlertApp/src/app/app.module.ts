@@ -21,6 +21,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { GoogleMapServiceProvider } from '../providers/google-map-service/google-map-service';
+import { NetworkServiceProvider } from '../providers/network-service/network-service';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { GoogleMapServiceProvider } from '../providers/google-map-service/google
     Network,
     RemoteServiceProvider,
     LocationTrackerProvider,
-    GoogleMapServiceProvider
+    GoogleMapServiceProvider,
+    NetworkServiceProvider
   ]
 })
 export class AppModule {}

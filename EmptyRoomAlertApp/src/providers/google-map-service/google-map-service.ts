@@ -17,7 +17,7 @@ export class GoogleMapServiceProvider {
   map: any;
 
   constructor(private geolocation: Geolocation) {
-    console.log('Hello GoogleMapServiceProvider Provider');
+    // console.log('Hello GoogleMapServiceProvider Provider');
   }
 
 
