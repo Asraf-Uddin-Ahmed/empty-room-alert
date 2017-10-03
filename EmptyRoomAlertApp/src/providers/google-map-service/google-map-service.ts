@@ -35,6 +35,7 @@ export class GoogleMapServiceProvider {
       let mapOptions = {
         center: latLng,
         zoom: 15,
+        gestureHandling: "cooperative",
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
