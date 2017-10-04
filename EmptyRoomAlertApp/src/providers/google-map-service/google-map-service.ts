@@ -96,7 +96,7 @@ export class GoogleMapServiceProvider {
       position: map.getCenter()
     });
 
-    let content = "<h3>You are here</h3>";
+    let content = "<p>You are here</p>";
     this.addInfoWindow(map, marker, content);
   }
   private addInfoWindow(map, marker, content) {
