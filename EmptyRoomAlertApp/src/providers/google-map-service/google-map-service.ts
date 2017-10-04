@@ -15,21 +15,27 @@ declare var google;
 export class GoogleMapServiceProvider {
 
   map: any;
+  private isLoaded: any = false;
 
   constructor(private geolocation: Geolocation) {
     // console.log('Hello GoogleMapServiceProvider Provider');
   }
 
-
+  isMapLoaded(): boolean{
+    return this.isLoaded;
+  }
   loadMap(mapElement: ElementRef) {
+    if(this.isLoaded) {
+      console.log("Map loaded previously");
+      return;
+    }
     if (typeof google != 'object') {
-      console.log("Map not loaded");
+      console.log("Map script not loaded");
       return;
     }
 
-    console.log("Map loaded");
+    console.log("Map script loaded");
     this.geolocation.getCurrentPosition().then((position) => {
-
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       let mapOptions = {
@@ -41,7 +47,7 @@ export class GoogleMapServiceProvider {
 
       this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
       this.addMarker();
-
+      this.isLoaded = true;
     }, (err) => {
       console.log(err);
     });

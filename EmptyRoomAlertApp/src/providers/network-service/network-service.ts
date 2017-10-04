@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network';
-import { AlertController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
+
+import { GoogleMapServiceProvider } from '../../providers/google-map-service/google-map-service';
 
 /*
   Generated class for the NetworkServiceProvider provider.
@@ -13,7 +15,8 @@ import 'rxjs/add/operator/map';
 export class NetworkServiceProvider {
 
   constructor(private network: Network,
-    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private googleMapServiceProvider: GoogleMapServiceProvider
   ) {
     // console.log('Hello NetworkServiceProvider Provider');
   }
@@ -26,15 +29,10 @@ export class NetworkServiceProvider {
     // watch network for a disconnect
     let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       console.log('network was disconnected :(');
-
-      const alert = this.alertCtrl.create({
-        title: 'Disconnected',
-        subTitle: 'Network not found',
-        message: 'Please check your network connection.',
-        enableBackdropDismiss: false,
-        buttons: ['OK']
-      });
-      alert.present();
+      this.toastCtrl.create({
+        message: 'Disconnected! Please check your network connection.',
+        duration: 5000
+      }).present();
     });
 
     // watch network for a connection
@@ -45,20 +43,16 @@ export class NetworkServiceProvider {
       // prior to doing any api requests as well.
       console.log(this.network);
 
-      const alert = this.alertCtrl.create({
-        title: 'Connected',
-        subTitle: 'Network found',
-        message: 'You can use app now.',
-        enableBackdropDismiss: false,
-        buttons: [{
-          text: 'OK',
-          role: 'cancel',
-          handler: data => {
-            location.reload();
-          }
-        }]
-      });
-      alert.present();
+      this.toastCtrl.create({
+        message: 'Connected! Network found.',
+        duration: 5000
+      }).present();
+
+      if(this.googleMapServiceProvider.isMapLoaded()) {
+        return;
+      } else {
+        location.reload();
+      }
     });
   }
 }
