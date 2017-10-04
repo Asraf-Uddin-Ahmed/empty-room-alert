@@ -37,15 +37,7 @@ export class GoogleMapServiceProvider {
     console.log("Map script loaded");
     this.geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        gestureHandling: "cooperative",
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-
-      this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+      this.initMap(latLng, mapElement);
       this.addMarker();
       this.isLoaded = true;
     }, (err) => {
@@ -53,6 +45,16 @@ export class GoogleMapServiceProvider {
     });
   }
 
+
+  private initMap(centerLatLng: any, mapElement: ElementRef) {
+    let mapOptions = {
+      center: centerLatLng,
+      zoom: 15,
+      gestureHandling: "cooperative",
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+  }
   private addMarker() {
 
     let marker = new google.maps.Marker({
