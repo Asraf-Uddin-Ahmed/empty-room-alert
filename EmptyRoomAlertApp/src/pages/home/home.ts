@@ -13,7 +13,7 @@ import { RoomsPage } from '../rooms/rooms';
 })
 export class HomePage {
 
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('maphome') mapElement: ElementRef;
  
   constructor(private navCtrl: NavController, 
     private locationTracker: LocationTrackerProvider,
@@ -22,7 +22,7 @@ export class HomePage {
     
   }
   ionViewDidLoad() {
-    this.googleMapServiceProvider.loadDirectionalMap(this.mapElement, "23.8529789,90.3828734");
+    this.googleMapServiceProvider.loadMap(this.mapElement);
   }
   
   enterRoom(event) {
