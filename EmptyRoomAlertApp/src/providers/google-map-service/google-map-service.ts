@@ -2,8 +2,6 @@ import { Injectable, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/map';
 
-import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
-
 
 declare var google;
 
@@ -16,25 +14,32 @@ declare var google;
 @Injectable()
 export class GoogleMapServiceProvider {
 
-  private directionsService = null;
-  private directionsDisplay = null;
-  private end = "0,-0";
-  
+  private _directionsService = null;
+  private _directionsDisplay = null;
+  private _end = "0,-0";
+  private _isDirectionalMapLoaded = false;
+  private _currentLatLng = null;
+
   constructor(
-    private locationTracker: LocationTrackerProvider,
     private geolocation: Geolocation
   ) {
     // console.log('Hello GoogleMapServiceProvider Provider');
     if(this.isMapScriptLoaded()) {
-      this.directionsService = new google.maps.DirectionsService;
-      this.directionsDisplay = new google.maps.DirectionsRenderer;
+      this._directionsService = new google.maps.DirectionsService;
+      this._directionsDisplay = new google.maps.DirectionsRenderer;
     }
   }
+
 
 
   isMapScriptLoaded(): boolean {
     return typeof google == 'object';
   }
+
+  setCurrentLatLng(currentLat, currentLng){
+    this._currentLatLng = new google.maps.LatLng(currentLat, currentLng);
+  }
+
   loadMap(mapElement: ElementRef) {
     if (!this.isMapScriptLoaded()) {
       console.log("loadMap() -> Map script not loaded");
@@ -43,13 +48,14 @@ export class GoogleMapServiceProvider {
     console.log("loadMap() -> Map script loaded");
 
     this.geolocation.getCurrentPosition().then((position) => {
-      let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      let map = this.initMap(currentLatLng, mapElement);
+      this._currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      let map = this.initMap(this._currentLatLng, mapElement);
       this.addMarker(map);
     }, (err) => {
       console.log(err);
     });
   }
+
   loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string){
     if (!this.isMapScriptLoaded()) {
       console.log("loadDirectionalMap() -> Map script not loaded");
@@ -57,21 +63,26 @@ export class GoogleMapServiceProvider {
     }
     console.log("loadDirectionalMap() -> Map script loaded");
 
-    this.end = destinationLatLng;
-    let currentLatLng = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lng);
-    let map = this.initMap(currentLatLng, mapElement);
-
-    this.directionsDisplay.setMap(map);
-    this.calculateAndDisplayRoute(currentLatLng);
+    this._end = destinationLatLng;
+    let map = this.initDirectionalMap(mapElement);
+    this._directionsDisplay.setMap(map);
+    this._isDirectionalMapLoaded = true;
+    this.calculateAndDisplayRoute(this._currentLatLng.lat(), this._currentLatLng.lng());
   }
-  calculateAndDisplayRoute(originLatLng) {
-    this.directionsService.route({
+
+  calculateAndDisplayRoute(originLat, originLng) {
+    if(!this._isDirectionalMapLoaded) {
+      return;
+    }
+    let originLatLng = new google.maps.LatLng(originLat, originLng);
+    
+    this._directionsService.route({
       origin: originLatLng,
-      destination: this.end,
+      destination: this._end,
       travelMode: 'DRIVING'
     }, (response, status) => {
       if (status === 'OK') {
-        this.directionsDisplay.setDirections(response);
+        this._directionsDisplay.setDirections(response);
       } else {
         window.alert('Directions request failed due to ' + status);
       }
@@ -79,9 +90,18 @@ export class GoogleMapServiceProvider {
   }
 
 
+
   private initMap(centerLatLng: any, mapElement: ElementRef): any {
     let mapOptions = {
       center: centerLatLng,
+      zoom: 15,
+      gestureHandling: "cooperative",
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    return new google.maps.Map(mapElement.nativeElement, mapOptions);
+  }
+  private initDirectionalMap(mapElement: ElementRef): any {
+    let mapOptions = {
       zoom: 15,
       gestureHandling: "cooperative",
       mapTypeId: google.maps.MapTypeId.ROADMAP

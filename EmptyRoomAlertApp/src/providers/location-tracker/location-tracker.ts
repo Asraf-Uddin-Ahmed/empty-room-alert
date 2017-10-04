@@ -3,6 +3,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/filter';
 
+import { GoogleMapServiceProvider } from '../../providers/google-map-service/google-map-service';
+
 /*
   Generated class for the LocationTrackerProvider provider.
 
@@ -18,7 +20,8 @@ export class LocationTrackerProvider {
 
   constructor(private zone: NgZone,
     private backgroundGeolocation: BackgroundGeolocation,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private googleMapServiceProvider: GoogleMapServiceProvider
   ) {
     // console.log('Hello LocationTrackerProvider Provider');
   }
@@ -65,6 +68,8 @@ export class LocationTrackerProvider {
       this.zone.run(() => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
+        this.googleMapServiceProvider.setCurrentLatLng(this.lat, this.lng);
+        this.googleMapServiceProvider.calculateAndDisplayRoute(this.lat, this.lng);
       });
     });
   }
