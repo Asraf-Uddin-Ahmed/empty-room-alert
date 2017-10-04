@@ -22,7 +22,7 @@ export class HomePage {
     
   }
   ionViewDidLoad() {
-    this.googleMapServiceProvider.loadMap(this.mapElement);
+    this.googleMapServiceProvider.loadDirectionalMap(this.mapElement, "23.8529789,90.3828734");
   }
   
   enterRoom(event) {

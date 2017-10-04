@@ -14,18 +14,22 @@ declare var google;
 @Injectable()
 export class GoogleMapServiceProvider {
 
-  map: any;
+  private map: any;
   private isLoaded: any = false;
-
+  private directionsService = new google.maps.DirectionsService;
+  private directionsDisplay = new google.maps.DirectionsRenderer;
+  private end = "0,-0";
+  
   constructor(private geolocation: Geolocation) {
     // console.log('Hello GoogleMapServiceProvider Provider');
   }
 
-  isMapLoaded(): boolean{
+
+  isMapLoaded(): boolean {
     return this.isLoaded;
   }
   loadMap(mapElement: ElementRef) {
-    if(this.isLoaded) {
+    if (this.isLoaded) {
       console.log("Map loaded previously");
       return;
     }
@@ -36,12 +40,38 @@ export class GoogleMapServiceProvider {
 
     console.log("Map script loaded");
     this.geolocation.getCurrentPosition().then((position) => {
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      this.initMap(latLng, mapElement);
+      let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      this.initMap(currentLatLng, mapElement);
       this.addMarker();
       this.isLoaded = true;
     }, (err) => {
       console.log(err);
+    });
+  }
+  loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string){
+    this.end = destinationLatLng;
+    this.geolocation.getCurrentPosition().then((position) => {
+      let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      this.initMap(currentLatLng, mapElement);
+      this.isLoaded = true;
+
+      this.directionsDisplay.setMap(this.map);
+      this.calculateAndDisplayRoute(currentLatLng);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+  calculateAndDisplayRoute(originLatLng) {
+    this.directionsService.route({
+      origin: originLatLng,
+      destination: this.end,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
     });
   }
 
