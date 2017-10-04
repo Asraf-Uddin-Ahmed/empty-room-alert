@@ -8,4 +8,13 @@ page-room-details {
     .no-data {
         color: orangered;
     }
+
+    .scroll {
+        height: 100%
+    }
+
+    #mapdetail {
+        width: 100%;
+        height: 100%;
+    }
 }

@@ -2,6 +2,8 @@ import { Injectable, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/map';
 
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
+
 
 declare var google;
 
@@ -14,13 +16,15 @@ declare var google;
 @Injectable()
 export class GoogleMapServiceProvider {
 
-  private map: any;
   private isLoaded: any = false;
   private directionsService = new google.maps.DirectionsService;
   private directionsDisplay = new google.maps.DirectionsRenderer;
   private end = "0,-0";
   
-  constructor(private geolocation: Geolocation) {
+  constructor(
+    private locationTracker: LocationTrackerProvider,
+    private geolocation: Geolocation
+  ) {
     // console.log('Hello GoogleMapServiceProvider Provider');
   }
 
@@ -34,32 +38,34 @@ export class GoogleMapServiceProvider {
       return;
     }
     if (typeof google != 'object') {
-      console.log("Map script not loaded");
+      console.log("loadMap() -> Map script not loaded");
       return;
     }
+    console.log("loadMap() -> Map script loaded");
 
-    console.log("Map script loaded");
     this.geolocation.getCurrentPosition().then((position) => {
       let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      this.initMap(currentLatLng, mapElement);
-      this.addMarker();
+      let map = this.initMap(currentLatLng, mapElement);
+      this.addMarker(map);
       this.isLoaded = true;
     }, (err) => {
       console.log(err);
     });
   }
   loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string){
-    this.end = destinationLatLng;
-    this.geolocation.getCurrentPosition().then((position) => {
-      let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      this.initMap(currentLatLng, mapElement);
-      this.isLoaded = true;
+    if (typeof google != 'object') {
+      console.log("loadDirectionalMap() -> Map script not loaded");
+      return;
+    }
+    console.log("loadDirectionalMap() -> Map script loaded");
 
-      this.directionsDisplay.setMap(this.map);
-      this.calculateAndDisplayRoute(currentLatLng);
-    }, (err) => {
-      console.log(err);
-    });
+    this.end = destinationLatLng;
+    let currentLatLng = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lng);
+    let map = this.initMap(currentLatLng, mapElement);
+    this.isLoaded = true;
+
+    this.directionsDisplay.setMap(map);
+    this.calculateAndDisplayRoute(currentLatLng);
   }
   calculateAndDisplayRoute(originLatLng) {
     this.directionsService.route({
@@ -76,36 +82,33 @@ export class GoogleMapServiceProvider {
   }
 
 
-  private initMap(centerLatLng: any, mapElement: ElementRef) {
+  private initMap(centerLatLng: any, mapElement: ElementRef): any {
     let mapOptions = {
       center: centerLatLng,
       zoom: 15,
       gestureHandling: "cooperative",
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+    return new google.maps.Map(mapElement.nativeElement, mapOptions);
   }
-  private addMarker() {
-
+  private addMarker(map) {
     let marker = new google.maps.Marker({
-      map: this.map,
+      map: map,
       animation: google.maps.Animation.DROP,
       // icon: "http://maps.google.com/mapfiles/kml/shapes/man.png",
-      position: this.map.getCenter()
+      position: map.getCenter()
     });
 
     let content = "<h3>You are here</h3>";
-
-    this.addInfoWindow(marker, content);
+    this.addInfoWindow(map, marker, content);
   }
-  private addInfoWindow(marker, content) {
-
+  private addInfoWindow(map, marker, content) {
     let infoWindow = new google.maps.InfoWindow({
       content: content
     });
 
     google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
+      infoWindow.open(map, marker);
     });
   }
 
