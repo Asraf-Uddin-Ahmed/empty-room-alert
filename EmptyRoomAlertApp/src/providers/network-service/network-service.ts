@@ -48,7 +48,7 @@ export class NetworkServiceProvider {
         duration: 5000
       }).present();
 
-      if(this.googleMapServiceProvider.isMapLoaded()) {
+      if(this.googleMapServiceProvider.isMapScriptLoaded()) {
         return;
       } else {
         location.reload();

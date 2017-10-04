@@ -16,9 +16,8 @@ declare var google;
 @Injectable()
 export class GoogleMapServiceProvider {
 
-  private isLoaded: any = false;
-  private directionsService = new google.maps.DirectionsService;
-  private directionsDisplay = new google.maps.DirectionsRenderer;
+  private directionsService = null;
+  private directionsDisplay = null;
   private end = "0,-0";
   
   constructor(
@@ -26,18 +25,18 @@ export class GoogleMapServiceProvider {
     private geolocation: Geolocation
   ) {
     // console.log('Hello GoogleMapServiceProvider Provider');
+    if(this.isMapScriptLoaded()) {
+      this.directionsService = new google.maps.DirectionsService;
+      this.directionsDisplay = new google.maps.DirectionsRenderer;
+    }
   }
 
 
-  isMapLoaded(): boolean {
-    return this.isLoaded;
+  isMapScriptLoaded(): boolean {
+    return typeof google == 'object';
   }
   loadMap(mapElement: ElementRef) {
-    if (this.isLoaded) {
-      console.log("Map loaded previously");
-      return;
-    }
-    if (typeof google != 'object') {
+    if (!this.isMapScriptLoaded()) {
       console.log("loadMap() -> Map script not loaded");
       return;
     }
@@ -47,13 +46,12 @@ export class GoogleMapServiceProvider {
       let currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       let map = this.initMap(currentLatLng, mapElement);
       this.addMarker(map);
-      this.isLoaded = true;
     }, (err) => {
       console.log(err);
     });
   }
   loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string){
-    if (typeof google != 'object') {
+    if (!this.isMapScriptLoaded()) {
       console.log("loadDirectionalMap() -> Map script not loaded");
       return;
     }
@@ -62,7 +60,6 @@ export class GoogleMapServiceProvider {
     this.end = destinationLatLng;
     let currentLatLng = new google.maps.LatLng(this.locationTracker.lat, this.locationTracker.lng);
     let map = this.initMap(currentLatLng, mapElement);
-    this.isLoaded = true;
 
     this.directionsDisplay.setMap(map);
     this.calculateAndDisplayRoute(currentLatLng);
