@@ -4,15 +4,16 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 import { GoogleMapServiceProvider } from '../../providers/google-map-service/google-map-service';
+import { LocationTrackerProvider } from '../../providers/location-tracker/location-tracker';
 
 @Component({
   selector: 'page-room-details',
   templateUrl: 'room-details.html'
 })
 export class RoomDetailsPage {
-  
+
   @ViewChild('mapdetail') mapElement: ElementRef;
-  
+
   selectedRoom: any;
   roomStateWithRoom: any;
   isRequestCompleted = false;
@@ -21,6 +22,7 @@ export class RoomDetailsPage {
     public navParams: NavParams,
     private remoteService: RemoteServiceProvider,
     private alertCtrl: AlertController,
+    private locationTracker: LocationTrackerProvider,
     private googleMapServiceProvider: GoogleMapServiceProvider
   ) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -39,7 +41,7 @@ export class RoomDetailsPage {
 
     this.remoteService.get(endPoint).subscribe(data => {
       this.roomStateWithRoom = data.items.length ? data.items[0] : null;
-      console.log(data, this.roomStateWithRoom);    
+      console.log(data, this.roomStateWithRoom);
       this.isRequestCompleted = true;
     }, err => {
       this.isRequestCompleted = true;

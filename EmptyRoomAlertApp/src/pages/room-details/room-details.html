@@ -3,7 +3,9 @@
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Details <network-status></network-status></ion-title>
+    <ion-title>Details
+      <network-status></network-status>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -28,8 +30,10 @@
     </div>
   </div>
 
-  <div #mapdetail id="mapdetail"></div> 
-  
+  <div #mapdetail id="mapdetail"></div>
+
+  <p text-right>{{locationTracker.lat}}, {{locationTracker.lng}}</p>
+
   <div *ngIf="!isRequestCompleted">
     <h1>Loading...</h1>
   </div>
