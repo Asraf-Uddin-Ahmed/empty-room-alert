@@ -7,9 +7,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)" color="{{item.color}}">
       <ion-icon name="{{icons[item.type]}}" item-left></ion-icon>
       {{item.name}}
       <div class="item-note" item-right>
