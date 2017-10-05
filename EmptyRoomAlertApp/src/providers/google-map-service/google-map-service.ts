@@ -131,7 +131,10 @@ export class GoogleMapServiceProvider {
     let marker = new google.maps.Marker({
       map: map,
       animation: google.maps.Animation.DROP,
-      // icon: "http://maps.google.com/mapfiles/kml/shapes/man.png",
+      icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+        new google.maps.Size(22, 22),
+        new google.maps.Point(0, 18),
+        new google.maps.Point(11, 11)),
       position: map.getCenter()
     });
 
