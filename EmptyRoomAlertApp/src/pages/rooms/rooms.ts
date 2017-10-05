@@ -34,8 +34,10 @@ export class RoomsPage {
           + "&sortBy.fieldName=LogTime&sortBy.isAscending=true&pagination.displayStart=0&pagination.displaySize=3";
 
         this.remoteService.get(endPoint).subscribe(data => {
-          room['roomState'] = data.items.length ? data.items[0] : null;
-          room['color'] = room['roomState'].isEmpty ? "secondary" : "danger";
+          if (data.items.length) {
+            room['roomState'] = data.items[0];
+            room['color'] = room['roomState'].isEmpty ? "secondary" : "danger";
+          }
         }, err => {
           console.log("Failed to getRoomDetail -> ", err);
         });
