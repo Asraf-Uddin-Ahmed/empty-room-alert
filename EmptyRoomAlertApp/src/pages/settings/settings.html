@@ -18,8 +18,7 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label>Radius</ion-label>
-    <ion-input type="text" [(ngModel)]="roomServiceProvider.radiusInMeter" name="radius" (ionBlur)="checkRadius()"></ion-input>
-    <ion-label>meter</ion-label>
+    <ion-label>Radius (in meter)</ion-label>
+    <ion-input type="number" [(ngModel)]="roomServiceProvider.radiusInMeter" name="radius" (ionBlur)="checkRadius()"></ion-input>
   </ion-item>
 </ion-content>
