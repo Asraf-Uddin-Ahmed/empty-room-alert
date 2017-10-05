@@ -24,7 +24,7 @@ export class GoogleMapServiceProvider {
     private geolocation: Geolocation
   ) {
     // console.log('Hello GoogleMapServiceProvider Provider');
-    if(this.isMapScriptLoaded()) {
+    if (this.isMapScriptLoaded()) {
       this._directionsService = new google.maps.DirectionsService;
       this._directionsDisplay = new google.maps.DirectionsRenderer;
     }
@@ -36,8 +36,12 @@ export class GoogleMapServiceProvider {
     return typeof google == 'object';
   }
 
-  setCurrentLatLng(currentLat, currentLng){
+  setCurrentLatLng(currentLat, currentLng) {
     this._currentLatLng = new google.maps.LatLng(currentLat, currentLng);
+  }
+
+  getCurrentLatLng() {
+    return this._currentLatLng;
   }
 
   loadMap(mapElement: ElementRef) {
@@ -56,7 +60,7 @@ export class GoogleMapServiceProvider {
     });
   }
 
-  loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string){
+  loadDirectionalMap(mapElement: ElementRef, destinationLatLng: string) {
     if (!this.isMapScriptLoaded()) {
       console.log("loadDirectionalMap() -> Map script not loaded");
       return;
@@ -71,11 +75,11 @@ export class GoogleMapServiceProvider {
   }
 
   calculateAndDisplayRoute(originLat, originLng) {
-    if(!this._isDirectionalMapLoaded) {
+    if (!this._isDirectionalMapLoaded) {
       return;
     }
     let originLatLng = new google.maps.LatLng(originLat, originLng);
-    
+
     this._directionsService.route({
       origin: originLatLng,
       destination: this._end,
@@ -88,9 +92,24 @@ export class GoogleMapServiceProvider {
       }
     });
   }
+  getDistanceFromLatLonInMeter(lat1, lon1, lat2, lon2) {
+    const RADIUS_OF_EARTH_IN_KM = 6371;
+    let distanceLat = this.deg2rad(lat2 - lat1);
+    let distanceLon = this.deg2rad(lon2 - lon1);
+    let squareOfHalfChordLengthBetweenPoints =
+      Math.sin(distanceLat / 2) * Math.sin(distanceLat / 2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+      Math.sin(distanceLon / 2) * Math.sin(distanceLon / 2);
+    var angularDistanceInRadian = 2 * Math.atan2(Math.sqrt(squareOfHalfChordLengthBetweenPoints), Math.sqrt(1 - squareOfHalfChordLengthBetweenPoints));
+    var distanceInKm = RADIUS_OF_EARTH_IN_KM * angularDistanceInRadian;
+    return distanceInKm * 1000;
+  }
 
 
 
+  private deg2rad(deg) {
+    return deg * (Math.PI / 180)
+  }
   private initMap(centerLatLng: any, mapElement: ElementRef): any {
     let mapOptions = {
       center: centerLatLng,
