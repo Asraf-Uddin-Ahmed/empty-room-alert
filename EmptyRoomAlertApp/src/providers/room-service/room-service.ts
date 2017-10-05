@@ -32,7 +32,7 @@ export class RoomServiceProvider {
       for (let room of rooms) {
         let roomLatLng = room.address.split(",");
         let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, roomLatLng[0], roomLatLng[1]);
-        console.log(room.name, distance);
+        // console.log(room.name, distance);
         this.minRoomDistance = this.minRoomDistance > distance ? distance : this.minRoomDistance;
         if(distance <= this.radiusInMeter){
           this.isAnyRoomInRadius = true;

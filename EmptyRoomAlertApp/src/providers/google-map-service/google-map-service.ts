@@ -83,22 +83,17 @@ export class GoogleMapServiceProvider {
   }
 
   addOrUpdateDeviceMarker(latitude, longitude) {
-    let latlng = new google.maps.LatLng(latitude, longitude);
-    if (this._deviceMarker == null) {
-      this._deviceMarker = new google.maps.Marker({
-        map: this._normalMap,
-        animation: google.maps.Animation.DROP,
-        icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-          new google.maps.Size(22, 22),
-          new google.maps.Point(0, 18),
-          new google.maps.Point(11, 11)),
-        position: latlng
-      });
-      let content = "<p>You are here</p>";
-      this.addInfoWindow(this._normalMap, this._deviceMarker, content);
-    } else {
-      this._deviceMarker.setPosition(latlng);
-    }
+    this._deviceMarker == null ? null : this._deviceMarker.setMap(null);
+    this._deviceMarker = new google.maps.Marker({
+      map: this._normalMap,
+      icon: new google.maps.MarkerImage('https://maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+        new google.maps.Size(22, 22),
+        new google.maps.Point(0, 18),
+        new google.maps.Point(11, 11)),
+      position: {lat: latitude, lng: longitude}
+    });
+    let content = "<p>You are here</p>";
+    this.addInfoWindow(this._normalMap, this._deviceMarker, content);
   }
 
   calculateAndDisplayRoute(originLat, originLng) {

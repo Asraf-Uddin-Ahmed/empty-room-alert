@@ -59,7 +59,7 @@ export class LocationTrackerProvider {
   startForegroundTracking() {
     console.log('startForegroundTracking');
     let options = {
-      frequency: 3000,
+      // frequency: 3000,
       enableHighAccuracy: true
     };
 

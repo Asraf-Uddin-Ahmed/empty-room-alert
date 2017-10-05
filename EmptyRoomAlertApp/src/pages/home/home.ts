@@ -31,6 +31,13 @@ export class HomePage {
     this.navCtrl.push(RoomsPage);
   }
 
+  // lat: number = 23.87297;
+  // lng: number = 90.3828587;
+  // changeMarker(){
+  //   this.googleMapServiceProvider.addOrUpdateDeviceMarker(this.lat * 1, this.lng * 1);
+  //   console.log("changeMarker() => ", this.lat, this.lng);
+  // }
+
   // start(){
   //   this.locationTracker.startForegroundTracking();
   // }
