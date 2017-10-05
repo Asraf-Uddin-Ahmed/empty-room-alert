@@ -20,7 +20,7 @@ export class GoogleMapServiceProvider {
   private _isDirectionalMapLoaded = false;
   private _currentLatLng = null;
   private _normalMap = null;
-
+  private _deviceMarker = null;
 
   constructor(
     private geolocation: Geolocation
@@ -55,14 +55,14 @@ export class GoogleMapServiceProvider {
 
     if(this._currentLatLng != null) {
       this._normalMap = this.initMap(this._currentLatLng, mapElement);
-      this.addMarker();
+      this.addOrUpdateDeviceMarker(this._currentLatLng.lat(), this._currentLatLng.lng());
       return;
     }
 
     this.geolocation.getCurrentPosition().then((position) => {
       this._currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this._normalMap = this.initMap(this._currentLatLng, mapElement);
-      this.addMarker();
+      this.addOrUpdateDeviceMarker(this._currentLatLng.lat(), this._currentLatLng.lng());
     }, (err) => {
       console.log(err);
     });
@@ -80,6 +80,22 @@ export class GoogleMapServiceProvider {
     this._directionsDisplay.setMap(map);
     this._isDirectionalMapLoaded = true;
     this.calculateAndDisplayRoute(this._currentLatLng.lat(), this._currentLatLng.lng());
+  }
+
+  addOrUpdateDeviceMarker(latitude, longitude) {
+    this._deviceMarker == null ? null : this._deviceMarker.setMap(null);
+    this._deviceMarker = new google.maps.Marker({
+      map: this._normalMap,
+      animation: google.maps.Animation.DROP,
+      icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+        new google.maps.Size(22, 22),
+        new google.maps.Point(0, 18),
+        new google.maps.Point(11, 11)),
+      position: {lat: latitude, lng: longitude}
+    });
+
+    let content = "<p>You are here</p>";
+    this.addInfoWindow(this._normalMap, this._deviceMarker, content);
   }
 
   calculateAndDisplayRoute(originLat, originLng) {
@@ -137,21 +153,6 @@ export class GoogleMapServiceProvider {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     return new google.maps.Map(mapElement.nativeElement, mapOptions);
-  }
-
-  private addMarker() {
-    let marker = new google.maps.Marker({
-      map: this._normalMap,
-      animation: google.maps.Animation.DROP,
-      icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-        new google.maps.Size(22, 22),
-        new google.maps.Point(0, 18),
-        new google.maps.Point(11, 11)),
-      position: this._normalMap.getCenter()
-    });
-
-    let content = "<p>You are here</p>";
-    this.addInfoWindow(this._normalMap, marker, content);
   }
 
   private addInfoWindow(map, marker, content) {

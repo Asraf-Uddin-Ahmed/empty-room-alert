@@ -72,6 +72,7 @@ export class LocationTrackerProvider {
         this.lng = position.coords.longitude;
         this.googleMapServiceProvider.setCurrentLatLng(this.lat, this.lng);
         this.googleMapServiceProvider.calculateAndDisplayRoute(this.lat, this.lng);
+        this.googleMapServiceProvider.addOrUpdateDeviceMarker(this.lat, this.lng);
         this.roomServiceProvider.findAnyRoomIsInRadius(this.lat, this.lng);
       });
     });
