@@ -16,7 +16,7 @@ export class RoomServiceProvider {
 
   radiusInMeter = 100;
   isAnyRoomInRadius = false;
-
+  minRoomDistance = null;
 
   constructor(
     private remoteService: RemoteServiceProvider,
@@ -26,12 +26,14 @@ export class RoomServiceProvider {
   }
 
   findAnyRoomIsInRadius(lat, lng) {
+    this.minRoomDistance = Infinity;
     this.isAnyRoomInRadius = false;
     this.remoteService.get("rooms").subscribe(rooms => {
       for (let room of rooms) {
         let roomLatLng = room.address.split(",");
         let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, roomLatLng[0], roomLatLng[1]);
         console.log(room.name, distance);
+        this.minRoomDistance = this.minRoomDistance > distance ? distance : this.minRoomDistance;
         if(distance <= this.radiusInMeter){
           this.isAnyRoomInRadius = true;
           break;
