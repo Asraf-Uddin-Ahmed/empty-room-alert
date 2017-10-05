@@ -53,7 +53,7 @@ export class GoogleMapServiceProvider {
     }
     console.log("loadMap() -> Map script loaded");
 
-    if(this._currentLatLng != null) {
+    if (this._currentLatLng != null) {
       this._normalMap = this.initMap(this._currentLatLng, mapElement);
       this.addOrUpdateDeviceMarker(this._currentLatLng.lat(), this._currentLatLng.lng());
       return;
@@ -83,19 +83,22 @@ export class GoogleMapServiceProvider {
   }
 
   addOrUpdateDeviceMarker(latitude, longitude) {
-    this._deviceMarker == null ? null : this._deviceMarker.setMap(null);
-    this._deviceMarker = new google.maps.Marker({
-      map: this._normalMap,
-      animation: google.maps.Animation.DROP,
-      icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-        new google.maps.Size(22, 22),
-        new google.maps.Point(0, 18),
-        new google.maps.Point(11, 11)),
-      position: {lat: latitude, lng: longitude}
-    });
-
-    let content = "<p>You are here</p>";
-    this.addInfoWindow(this._normalMap, this._deviceMarker, content);
+    let latlng = new google.maps.LatLng(latitude, longitude);
+    if (this._deviceMarker == null) {
+      this._deviceMarker = new google.maps.Marker({
+        map: this._normalMap,
+        animation: google.maps.Animation.DROP,
+        icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+          new google.maps.Size(22, 22),
+          new google.maps.Point(0, 18),
+          new google.maps.Point(11, 11)),
+        position: latlng
+      });
+      let content = "<p>You are here</p>";
+      this.addInfoWindow(this._normalMap, this._deviceMarker, content);
+    } else {
+      this._deviceMarker.setPosition(latlng);
+    }
   }
 
   calculateAndDisplayRoute(originLat, originLng) {
