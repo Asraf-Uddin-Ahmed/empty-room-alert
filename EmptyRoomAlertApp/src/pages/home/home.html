@@ -10,7 +10,7 @@
 
 <ion-content padding>
 
-  <button ion-button color="primary" (click)="enterRoom($event)" block icon-end>
+  <button ion-button color="primary" (click)="enterRoom($event)" block icon-end [disabled]="!roomServiceProvider.isAnyRoomInRadius">
     Enter  
     <ion-icon name="log-in"></ion-icon>
   </button>

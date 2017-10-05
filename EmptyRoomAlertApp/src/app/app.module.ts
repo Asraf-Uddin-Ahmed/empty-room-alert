@@ -24,6 +24,7 @@ import { RemoteServiceProvider } from '../providers/remote-service/remote-servic
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { GoogleMapServiceProvider } from '../providers/google-map-service/google-map-service';
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
+import { RoomServiceProvider } from '../providers/room-service/room-service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { NetworkServiceProvider } from '../providers/network-service/network-ser
     RemoteServiceProvider,
     LocationTrackerProvider,
     GoogleMapServiceProvider,
-    NetworkServiceProvider
+    NetworkServiceProvider,
+    RoomServiceProvider
   ]
 })
 export class AppModule {}

@@ -4,6 +4,7 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/filter';
 
 import { GoogleMapServiceProvider } from '../../providers/google-map-service/google-map-service';
+import { RoomServiceProvider } from '../../providers/room-service/room-service';
 
 /*
   Generated class for the LocationTrackerProvider provider.
@@ -21,6 +22,7 @@ export class LocationTrackerProvider {
   constructor(private zone: NgZone,
     private backgroundGeolocation: BackgroundGeolocation,
     private geolocation: Geolocation,
+    private roomServiceProvider: RoomServiceProvider,
     private googleMapServiceProvider: GoogleMapServiceProvider
   ) {
     // console.log('Hello LocationTrackerProvider Provider');
@@ -70,6 +72,7 @@ export class LocationTrackerProvider {
         this.lng = position.coords.longitude;
         this.googleMapServiceProvider.setCurrentLatLng(this.lat, this.lng);
         this.googleMapServiceProvider.calculateAndDisplayRoute(this.lat, this.lng);
+        this.roomServiceProvider.findAnyRoomIsInRadius(this.lat, this.lng);
       });
     });
   }
