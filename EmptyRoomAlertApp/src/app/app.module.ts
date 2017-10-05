@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { RoomDetailsPage } from '../pages/room-details/room-details';
 import { RoomsPage } from '../pages/rooms/rooms';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -31,7 +32,8 @@ import { RoomServiceProvider } from '../providers/room-service/room-service';
     MyApp,
     HomePage,
     RoomDetailsPage,
-    RoomsPage
+    RoomsPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { RoomServiceProvider } from '../providers/room-service/room-service';
     MyApp,
     HomePage,
     RoomDetailsPage,
-    RoomsPage
+    RoomsPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

@@ -14,7 +14,7 @@ import { RemoteServiceProvider } from '../../providers/remote-service/remote-ser
 @Injectable()
 export class RoomServiceProvider {
 
-  private readonly RADIUS_IN_METER = 100;
+  radiusInMeter = 100;
   isAnyRoomInRadius = false;
 
 
@@ -32,7 +32,7 @@ export class RoomServiceProvider {
         let roomLatLng = room.address.split(",");
         let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, roomLatLng[0], roomLatLng[1]);
         console.log(room.name, distance);
-        if(distance <= this.RADIUS_IN_METER){
+        if(distance <= this.radiusInMeter){
           this.isAnyRoomInRadius = true;
           break;
         }

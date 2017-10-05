@@ -4,6 +4,7 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HomePage } from '../pages/home/home';
 import { RoomsPage } from '../pages/rooms/rooms';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -43,7 +44,8 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Spots', component: RoomsPage }
+      { title: 'Spots', component: RoomsPage },
+      { title: 'Settings', component: SettingsPage }
     ];
   }
 
