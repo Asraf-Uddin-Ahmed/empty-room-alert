@@ -44,7 +44,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Spots', component: RoomsPage },
+      // { title: 'Spots', component: RoomsPage },
       { title: 'Settings', component: SettingsPage }
     ];
   }
