@@ -19,6 +19,8 @@ export class GoogleMapServiceProvider {
   private _end = "0,-0";
   private _isDirectionalMapLoaded = false;
   private _currentLatLng = null;
+  private _normalMap = null;
+
 
   constructor(
     private geolocation: Geolocation
@@ -51,10 +53,16 @@ export class GoogleMapServiceProvider {
     }
     console.log("loadMap() -> Map script loaded");
 
+    if(this._currentLatLng != null) {
+      this._normalMap = this.initMap(this._currentLatLng, mapElement);
+      this.addMarker();
+      return;
+    }
+
     this.geolocation.getCurrentPosition().then((position) => {
       this._currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      let map = this.initMap(this._currentLatLng, mapElement);
-      this.addMarker(map);
+      this._normalMap = this.initMap(this._currentLatLng, mapElement);
+      this.addMarker();
     }, (err) => {
       console.log(err);
     });
@@ -92,6 +100,7 @@ export class GoogleMapServiceProvider {
       }
     });
   }
+
   getDistanceFromLatLonInMeter(lat1, lon1, lat2, lon2) {
     const RADIUS_OF_EARTH_IN_KM = 6371;
     let distanceLat = this.deg2rad(lat2 - lat1);
@@ -110,6 +119,7 @@ export class GoogleMapServiceProvider {
   private deg2rad(deg) {
     return deg * (Math.PI / 180)
   }
+
   private initMap(centerLatLng: any, mapElement: ElementRef): any {
     let mapOptions = {
       center: centerLatLng,
@@ -119,6 +129,7 @@ export class GoogleMapServiceProvider {
     }
     return new google.maps.Map(mapElement.nativeElement, mapOptions);
   }
+
   private initDirectionalMap(mapElement: ElementRef): any {
     let mapOptions = {
       zoom: 15,
@@ -127,20 +138,22 @@ export class GoogleMapServiceProvider {
     }
     return new google.maps.Map(mapElement.nativeElement, mapOptions);
   }
-  private addMarker(map) {
+
+  private addMarker() {
     let marker = new google.maps.Marker({
-      map: map,
+      map: this._normalMap,
       animation: google.maps.Animation.DROP,
       icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
         new google.maps.Size(22, 22),
         new google.maps.Point(0, 18),
         new google.maps.Point(11, 11)),
-      position: map.getCenter()
+      position: this._normalMap.getCenter()
     });
 
     let content = "<p>You are here</p>";
-    this.addInfoWindow(map, marker, content);
+    this.addInfoWindow(this._normalMap, marker, content);
   }
+
   private addInfoWindow(map, marker, content) {
     let infoWindow = new google.maps.InfoWindow({
       content: content
