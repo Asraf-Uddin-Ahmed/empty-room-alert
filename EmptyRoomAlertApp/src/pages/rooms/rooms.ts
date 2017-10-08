@@ -11,8 +11,11 @@ import { RoomDetailsPage } from '../room-details/room-details';
   templateUrl: 'rooms.html'
 })
 export class RoomsPage {
+
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
+  timer = null;
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -20,15 +23,21 @@ export class RoomsPage {
     private alertCtrl: AlertController
   ) {
     this.icons = ['star', 'person', 'book', 'car'];
-
     this.getRooms();
+    this.timer = setInterval(() => {
+      this.getRooms();
+    }, 30000);
+  }
+  ionViewWillLeave() {
+    clearInterval(this.timer);
   }
 
+
   getRooms() {
-    this.remoteService.get("rooms").subscribe(data => {
-      this.items = data;
-      console.log(data);
-      for (let room of this.items) {
+    this.remoteService.get("rooms").subscribe(rooms => {
+      this.items = rooms;
+      console.log(rooms);
+      for (let room of rooms) {
         let endPoint = "room-states?searchItem.roomID=" + room['id']
           + "&searchItem.LogTimeFrom=" + new Date().toLocaleString()
           + "&sortBy.fieldName=LogTime&sortBy.isAscending=true&pagination.displayStart=0&pagination.displaySize=3";
