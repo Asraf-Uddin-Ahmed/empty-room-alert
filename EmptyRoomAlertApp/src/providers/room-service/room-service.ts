@@ -28,19 +28,21 @@ export class RoomServiceProvider {
   }
 
   findAnyRoomIsInRadius(lat, lng) {
-    this.minRoomDistance = Infinity;
-    this.isAnyRoomInRadius = false;
+    let minDistance = Infinity;
+    let isInRadius = false;
     this.remoteService.get("rooms").subscribe(rooms => {
       for (let room of rooms) {
         let roomLatLng = room.address.split(",");
         let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, roomLatLng[0], roomLatLng[1]);
         // console.log(room.name, distance);
-        this.minRoomDistance = this.minRoomDistance > distance ? distance : this.minRoomDistance;
+        minDistance = minDistance > distance ? distance : minDistance;
         if(distance <= this.radiusInMeter){
-          this.isAnyRoomInRadius = true;
+          isInRadius = true;
           break;
         }
       }
+      this.minRoomDistance = minDistance;
+      this.isAnyRoomInRadius = isInRadius;
     }, err => {
       console.log("Failed to getRooms -> ", err);
     });
