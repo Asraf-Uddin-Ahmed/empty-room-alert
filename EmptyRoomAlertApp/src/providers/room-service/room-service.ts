@@ -14,7 +14,7 @@ import { RemoteServiceProvider } from '../../providers/remote-service/remote-ser
 @Injectable()
 export class RoomServiceProvider {
 
-  radiusInMeter = 100;
+  radiusInMeter = 3000;
   isAnyRoomInRadius = false;
   minRoomDistance = null;
 
