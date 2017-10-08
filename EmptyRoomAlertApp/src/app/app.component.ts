@@ -46,7 +46,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Spots', component: RoomsPage },
+      // { title: 'Spots', component: RoomsPage },
       { title: 'Settings', component: SettingsPage }
     ];
   }
@@ -73,10 +73,10 @@ export class MyApp {
   private pullNotificationData() {
     let intervalInMiliSecond = 30000;
 
-    this.roomServiceProvider.checkRoomState(intervalInMiliSecond);
+    this.roomServiceProvider.notifyIfRoomStateChange(intervalInMiliSecond);
     setInterval(() => {
       console.log("foreground process");
-      this.roomServiceProvider.checkRoomState(intervalInMiliSecond);
+      this.roomServiceProvider.notifyIfRoomStateChange(intervalInMiliSecond);
     }, intervalInMiliSecond);
     
     // this.backgroundMode.enable();

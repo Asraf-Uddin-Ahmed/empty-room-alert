@@ -46,7 +46,7 @@ export class RoomServiceProvider {
     });
   }
   
-  checkRoomState(intervalInMiliSecond: number) {
+  notifyIfRoomStateChange(intervalInMiliSecond: number) {
     let start = new Date();
     let end = new Date();
     end.setMilliseconds(end.getMilliseconds() + intervalInMiliSecond);
