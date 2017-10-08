@@ -15,6 +15,7 @@ import { AppMinimize } from '@ionic-native/app-minimize';
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
+import { RoomServiceProvider } from '../providers/room-service/room-service';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class MyApp {
     private localNotifications: LocalNotifications,
     private appMinimize: AppMinimize,
     private locationTracker: LocationTrackerProvider,
+    private roomServiceProvider: RoomServiceProvider,
     private networkServiceProvider: NetworkServiceProvider
   ) {
     this.initializeApp();
@@ -44,7 +46,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HomePage },
-      // { title: 'Spots', component: RoomsPage },
+      { title: 'Spots', component: RoomsPage },
       { title: 'Settings', component: SettingsPage }
     ];
   }
@@ -70,10 +72,13 @@ export class MyApp {
   
   private pullNotificationData() {
     let intervalInMiliSecond = 30000;
-    let rmtService = this.remoteService;
-    let lclNotifications = this.localNotifications;
-    let fnNotify = this.notifyRoomStateChange;
 
+    this.roomServiceProvider.checkRoomState(intervalInMiliSecond);
+    setInterval(() => {
+      console.log("foreground process");
+      this.roomServiceProvider.checkRoomState(intervalInMiliSecond);
+    }, intervalInMiliSecond);
+    
     // this.backgroundMode.enable();
     // this.backgroundMode.overrideBackButton();
     // this.backgroundMode.on("activate").subscribe(() => {
@@ -83,42 +88,9 @@ export class MyApp {
     //     // fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
     //   }, intervalInMiliSecond);
     // });
-
-    setInterval(function () {
-      console.log("foreground process");
-      fnNotify(intervalInMiliSecond, rmtService, lclNotifications);
-    }, intervalInMiliSecond);
-    
   }
 
-  private notifyRoomStateChange(intervalInMiliSecond: number, rmtService: RemoteServiceProvider, lclNotifications: LocalNotifications) {
-    let start = new Date();
-    let end = new Date();
-    end.setMilliseconds(end.getMilliseconds() + intervalInMiliSecond);
-
-    let endPoint = "room-states?searchItem.LogTimeFrom=" + start.toLocaleString()
-      + "&searchItem.LogTimeTo=" + end.toLocaleString()
-      + "&sortBy.fieldName=LogTime&sortBy.isAscending=true&pagination.displayStart=0&pagination.displaySize=100";
-
-    rmtService.get(endPoint).subscribe(data => {
-      let arrRoomStateWithRoom = data.items;
-      console.log(arrRoomStateWithRoom);
-
-      let arrNotification = [];
-      for (let I = 0; I < arrRoomStateWithRoom.length; I++) {
-        arrNotification.push({
-          id: I,
-          title: arrRoomStateWithRoom[I].room.name + ' has been ' + (arrRoomStateWithRoom[I].isEmpty ? 'empty' : 'booked') + ' now',
-          text: arrRoomStateWithRoom[I].room.address,
-          data: arrRoomStateWithRoom[I].room.address
-        });
-      }
-      console.log(arrNotification);
-      lclNotifications.schedule(arrNotification);
-    }, err => {
-      console.log("Oops!");
-    });
-  }
+  
 
   openPage(page) {
     // close the menu when clicking a link from the menu
