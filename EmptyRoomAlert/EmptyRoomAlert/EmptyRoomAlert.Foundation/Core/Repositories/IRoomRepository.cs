@@ -12,5 +12,6 @@ namespace EmptyRoomAlert.Foundation.Core.Repositories
     public interface IRoomRepository : IRepository<Room>
     {
         Room GetFirstByType(RoomType type);
+        ICollection<Room> GetByArea(Guid areaID);
     }
 }

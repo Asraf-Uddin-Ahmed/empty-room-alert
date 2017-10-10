@@ -27,5 +27,10 @@ namespace EmptyRoomAlert.Foundation.Persistence.Services
         {
             return _unitOfWork.Rooms.GetAll();
         }
+
+        public ICollection<Room> GetByArea(Guid areaID)
+        {
+            return _unitOfWork.Rooms.GetByArea(areaID);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace EmptyRoomAlert.Foundation.Core.Services
     public interface IRoomService
     {
         ICollection<Room> GetAll();
+        ICollection<Room> GetByArea(Guid areaID);
     }
 }

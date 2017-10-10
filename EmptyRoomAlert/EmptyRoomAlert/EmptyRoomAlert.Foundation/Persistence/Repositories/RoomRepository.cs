@@ -18,5 +18,10 @@ namespace EmptyRoomAlert.Foundation.Persistence.Repositories
         {
             return base.dbSet.FirstOrDefault(r => r.Type == type);
         }
+
+        public ICollection<Room> GetByArea(Guid areaID)
+        {
+            return base.dbSet.Where(r => r.AreaID == areaID).ToList();
+        }
     }
 }
