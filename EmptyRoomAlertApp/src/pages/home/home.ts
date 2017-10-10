@@ -5,7 +5,7 @@ import { LocationTrackerProvider } from '../../providers/location-tracker/locati
 import { GoogleMapServiceProvider } from '../../providers/google-map-service/google-map-service';
 import { RoomServiceProvider } from '../../providers/room-service/room-service';
 
-import { RoomsPage } from '../rooms/rooms';
+import { AreasPage } from '../areas/areas';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class HomePage {
   }
 
   enterRoom(event) {
-    this.navCtrl.push(RoomsPage);
+    this.navCtrl.push(AreasPage);
   }
 
   // lat: number = 23.87297;
