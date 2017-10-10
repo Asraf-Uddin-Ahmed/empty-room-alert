@@ -17,6 +17,7 @@ namespace EmptyRoomAlert.Foundation.Persistence
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
+        public DbSet<Area> Areas { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<RoomState> RoomStates { get; set; }
         public DbSet<Settings> Settings { get; set; }
@@ -40,6 +41,7 @@ namespace EmptyRoomAlert.Foundation.Persistence
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new AreaConfiguration());
             modelBuilder.Configurations.Add(new RoomConfiguration());
             modelBuilder.Configurations.Add(new RoomStateConfiguration());
 

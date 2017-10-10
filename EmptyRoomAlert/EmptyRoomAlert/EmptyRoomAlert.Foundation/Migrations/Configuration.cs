@@ -52,9 +52,9 @@ namespace EmptyRoomAlert.Foundation.Migrations
                 PopulateSetingsTable(context);
             }
 
-            if (!context.Rooms.Any())
+            if (!context.Rooms.Any() || !context.Areas.Any())
             {
-                PopulateRoomsTable(context);
+                PopulateAreaAndRoomTable(context);
             }
 
             context.SaveChanges();
@@ -111,13 +111,27 @@ namespace EmptyRoomAlert.Foundation.Migrations
             };
             listSettings.ForEach(s => context.Settings.AddOrUpdate(p => p.ID, s));
         }
-        private static void PopulateRoomsTable(ApplicationDbContext context)
+        private static void PopulateAreaAndRoomTable(ApplicationDbContext context)
         {
+            List<Area> listArea = new List<Area>
+            {
+                new Area(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 1", Name = "Area 1"},
+                new Area(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 2", Name = "Area 2"},
+                new Area(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 3", Name = "Area 3"},
+                new Area(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 4", Name = "Area 4"},
+            };
+            listArea.ForEach(s => context.Areas.AddOrUpdate(p => p.ID, s));
+            
             List<Room> listRooms = new List<Room>
             {
-                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 1", Name = "Class Room", Type = RoomType.ClassRoom},
-                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 2", Name = "Your Room", Type = RoomType.Normal},
-                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 3", Name = "Parking Lot", Type = RoomType.ParkingLot},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 1_1", Name = "Class Room", Type = RoomType.ClassRoom, AreaID = listArea[0].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 1_2", Name = "Class Room", Type = RoomType.ClassRoom, AreaID = listArea[0].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 2_1", Name = "Your Room", Type = RoomType.Normal, AreaID = listArea[1].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 2_2", Name = "Your Room", Type = RoomType.Normal, AreaID = listArea[1].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 3_1", Name = "Parking Lot", Type = RoomType.ParkingLot, AreaID = listArea[2].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 3_2", Name = "Parking Lot", Type = RoomType.ParkingLot, AreaID = listArea[2].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 4_1", Name = "Parking Lot", Type = RoomType.ParkingLot, AreaID = listArea[3].ID},
+                new Room(){ID = GuidUtility.GetNewSequentialGuid(), Address = "address 4_2", Name = "Parking Lot", Type = RoomType.ParkingLot, AreaID = listArea[3].ID},
             };
             listRooms.ForEach(s => context.Rooms.AddOrUpdate(p => p.ID, s));
         }
