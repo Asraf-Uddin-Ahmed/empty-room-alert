@@ -15,6 +15,7 @@ namespace EmptyRoomAlert.Foundation.Persistence
     {
         private ApplicationDbContext _context;
 
+        private IAreaRepository _areas;
         private IRoomRepository _rooms;
         private IRoomStateRepository _roomStates;
         private ISettingsRepository _settings;
@@ -25,7 +26,17 @@ namespace EmptyRoomAlert.Foundation.Persistence
             _context = context;
         }
 
-
+        public IAreaRepository Areas
+        {
+            get
+            {
+                if (_areas == null)
+                {
+                    _areas = new AreaRepository(_context);
+                }
+                return _areas;
+            }
+        }
         public IRoomRepository Rooms
         {
             get
