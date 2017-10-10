@@ -12,6 +12,7 @@ import { RoomDetailsPage } from '../room-details/room-details';
 })
 export class RoomsPage {
 
+  selectedArea: any;
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
   timer = null;
@@ -22,7 +23,9 @@ export class RoomsPage {
     private remoteService: RemoteServiceProvider,
     private alertCtrl: AlertController
   ) {
+    this.selectedArea = navParams.get('area');
     this.icons = ['star', 'person', 'book', 'car'];
+
     this.getRooms();
     this.timer = setInterval(() => {
       this.getRooms();
@@ -34,7 +37,7 @@ export class RoomsPage {
 
 
   getRooms() {
-    this.remoteService.get("rooms").subscribe(rooms => {
+    this.remoteService.get("areas/" + this.selectedArea.id + "/rooms").subscribe(rooms => {
       this.items = rooms;
       console.log(rooms);
       for (let room of rooms) {
