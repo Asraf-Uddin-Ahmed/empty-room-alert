@@ -42,5 +42,21 @@ namespace EmptyRoomAlert.WebApi.Controllers.Resource
                 return InternalServerError(ex, "Failed to GetRooms");
             }
         }
+
+        [Route("areas/{areaID:guid}/rooms")]
+        [HttpGet]
+        public IHttpActionResult GetRoomsByArea(Guid areaID)
+        {
+            try
+            {
+                ICollection<Room> rooms = _roomService.GetByArea(areaID);
+                return base.Ok(_roomResponseFactory.Create(rooms));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to GetRoomsByArea");
+                return InternalServerError(ex, "Failed to GetRoomsByArea");
+            }
+        }
     }
 }
