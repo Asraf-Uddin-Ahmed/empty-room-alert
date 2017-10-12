@@ -18,6 +18,13 @@ export class RoomServiceProvider {
   radiusInMeter = 3000;
   isAnyRoomInRadius = false;
   minRoomDistance = null;
+  userLocations = [
+    { latitude: 23.872709, longitude: 90.383036, name: "Home" },
+    { latitude: 23.872728, longitude: 90.383336, name: "University" },
+    { latitude: 23.873140, longitude: 90.383411, name: "Work Place" },
+    { latitude: 23.872306, longitude: 90.383250, name: "Others" }
+  ];
+
 
   constructor(
     private remoteService: RemoteServiceProvider,
@@ -27,27 +34,23 @@ export class RoomServiceProvider {
     // console.log('Hello RoomServiceProvider Provider');
   }
 
+
   findAnyRoomIsInRadius(lat, lng) {
     let minDistance = Infinity;
     let isInRadius = false;
-    this.remoteService.get("rooms").subscribe(rooms => {
-      for (let room of rooms) {
-        let roomLatLng = room.address.split(",");
-        let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, roomLatLng[0], roomLatLng[1]);
-        // console.log(room.name, distance);
-        minDistance = minDistance > distance ? distance : minDistance;
-        if(distance <= this.radiusInMeter){
-          isInRadius = true;
-          break;
-        }
+    for (let userLocation of this.userLocations) {
+      let distance = this.googleMapServiceProvider.getDistanceFromLatLonInMeter(lat, lng, userLocation.latitude, userLocation.longitude);
+      console.log(userLocation, distance);
+      minDistance = minDistance > distance ? distance : minDistance;
+      if (distance <= this.radiusInMeter) {
+        isInRadius = true;
+        break;
       }
-      this.minRoomDistance = minDistance;
-      this.isAnyRoomInRadius = isInRadius;
-    }, err => {
-      console.log("Failed to getRooms -> ", err);
-    });
+    }
+    this.minRoomDistance = minDistance;
+    this.isAnyRoomInRadius = isInRadius;
   }
-  
+
   notifyIfRoomStateChange(intervalInMiliSecond: number) {
     let start = new Date();
     let end = new Date();
@@ -60,13 +63,13 @@ export class RoomServiceProvider {
     this.remoteService.get(endPoint).subscribe(data => {
       let arrRoomStateWithRoom = data.items;
       console.log(arrRoomStateWithRoom);
-      this.notifyLocally(arrRoomStateWithRoom)      
+      this.notifyLocally(arrRoomStateWithRoom)
     }, err => {
       console.log("Oops!");
     });
   }
 
-  private notifyLocally(arrRoomStateWithRoom){
+  private notifyLocally(arrRoomStateWithRoom) {
     let arrNotification = [];
     for (let I = 0; I < arrRoomStateWithRoom.length; I++) {
       arrNotification.push({

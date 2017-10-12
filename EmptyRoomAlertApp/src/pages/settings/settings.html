@@ -21,4 +21,10 @@
     <ion-label>Radius (in meter)</ion-label>
     <ion-input type="number" [(ngModel)]="roomServiceProvider.radiusInMeter" name="radius" (ionBlur)="checkRadius()"></ion-input>
   </ion-item>
+  
+  <ion-item *ngFor="let userLocation of roomServiceProvider.userLocations">
+    <ion-label>{{userLocation.name}}</ion-label>
+    <ion-input type="number" [(ngModel)]="userLocation.latitude" (ionBlur)="checkRadius()"></ion-input>
+    <ion-input type="number" [(ngModel)]="userLocation.longitude" (ionBlur)="checkRadius()"></ion-input>
+  </ion-item>
 </ion-content>
