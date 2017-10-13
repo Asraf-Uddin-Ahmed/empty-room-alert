@@ -52,6 +52,10 @@ export class RoomServiceProvider {
   }
 
   notifyIfRoomStateChange(intervalInMiliSecond: number) {
+    if (!this.isAnyRoomInRadius) {
+      return;
+    }
+
     let start = new Date();
     let end = new Date();
     end.setMilliseconds(end.getMilliseconds() + intervalInMiliSecond);
